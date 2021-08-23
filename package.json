@@ -1,0 +1,9 @@
+{
+  "name": "chessmythJS",
+  "version": "1.0.0",
+  "description": "Chess Mythologia Library",
+  "main": "index.js",
+  "repository": "https://github.com/Eikix/chessmythJS.git",
+  "author": "Eikix <66871571+Eikix@users.noreply.github.com>",
+  "license": "MIT"
+}
