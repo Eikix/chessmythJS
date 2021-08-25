@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "https://github.com/Eikix/chessmythJS.git",
   "author": "Eikix <66871571+Eikix@users.noreply.github.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }

@@ -1,5 +1,8 @@
-const Piece = require("./chess/pieces/piece");
+const width = 10;
+const boardOptions = {backline: 'rnjbqkbjnr', frontline:'psppppppsp', width:width}
 
-const piece = new Piece("knight", "white", "a2")
+const Chess = require("./chess/Chess");
 
-console.log(piece.getPosition(), piece.type);
+const chess = new Chess(boardOptions);
+
+console.log(chess.getBoard());

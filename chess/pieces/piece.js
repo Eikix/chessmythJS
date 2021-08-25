@@ -1,26 +1,22 @@
 class Piece {
-    isAlive = true;
-    #formerPosition; // eslint-disable-line no-use-before-define
-    #position;
-    constructor(type, color, position) {
-        this.type = type;
-        this.color = color;
-        this.#position = position;
-        this.#formerPosition = null;
+
+    /* Mobility is an array of objects containing allowed moves: e.g. [
+        {
+            move: Array || String, example:  [1, 2] // "lineForward" (means all line long) // "diagRight" (means all diag long) // [-1, -2] // etc. (diagLeft, lineBackward) //
+
+
+            available: String, example: "firstTurn", "always"
+            captureMove:  Array || String, example: [1, 1], etc.
+        }  
+    ] */
+    #mobility;
+    #canPromote;
+    #name;
+
+    constructor(name, mobility, canPromote) {
+        this.#mobility = mobility;
+        this.#name = name;
+        this.#canPromote = canPromote;
     }
-
-    movePiece(from, to) {
-        this.#position = to;
-        this.#formerPosition = from;
-    }
-
-    getPosition() {
-        return this.#position;
-    }
-
-
-
 
 }
-
-module.exports = Piece;

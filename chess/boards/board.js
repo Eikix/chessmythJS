@@ -1,36 +1,24 @@
+const convertBoardOptionsToInitialBoard = require("../utils/convertToBoard");
+
 class Board {
-    constructor(dimension) {
-        if (dimension > 0 && dimension < 27) {
-            this.#dimension = dimension;
-            this.#board = this.setBoard();
-        } else {
-            this.#dimension = 0;
-            this.#board = {};
-        }
-        
+    #dimension;
+    constructor(boardOptions) {
+        this.#dimension = boardOptions?.width || 0;
+        // Initial board is an object with keys of format "NumberNumber" as strings. Example first row fifth column is "15" and entries of format: {piece: null || str, terrain: null | str}
+        this.board = convertBoardOptionsToInitialBoard(boardOptions);
     }
 
 
     getDimensions() {
-        return #dimension;
+        return this.#dimension;
     }
 
     getBoardSize() {
-        return #dimension*#dimension;
-    }
-
-    setBoard() {
-        const newBoard = {}
-        for (let x=0; x<dimension; x++) {
-            for (let y=0; y<dimension; y++) {
-                newBoard[String.fromCharCode(x+97)][y] = x+y;
-            }
-        }
-        return newBoard;
+        return this.#dimension*this.#dimension;
     }
 
     getBoard() {
-        return this.#board;
+        return this.board;
     }
 
 
