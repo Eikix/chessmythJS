@@ -27,6 +27,12 @@ module.exports = {
             canCapture: true,
             mustCapture: true,
         },
+        {
+            move: [1, -1],
+            available: -1,
+            canCapture: true,
+            mustCapture: true,
+        },
     ],
     r: [
         {
@@ -41,10 +47,28 @@ module.exports = {
             canCapture: true,
             mustCapture: false,
         },
+        {
+            move: 'lineLeft',
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
+        {
+            move: 'lineRight',
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
     ],
     n: [
         {
             move: [2, 1],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
+        {
+            move: [2, -1],
             available: -1,
             canCapture: true,
             mustCapture: false,
@@ -56,13 +80,31 @@ module.exports = {
             mustCapture: false,
         },
         {
+            move: [1, -2],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
+        {
             move: [-1, -2],
             available: -1,
             canCapture: true,
             mustCapture: false,
         },
         {
+            move: [-1, 2],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
+        {
             move: [-2, -1],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
+        {
+            move: [-2, 1],
             available: -1,
             canCapture: true,
             mustCapture: false,
@@ -131,6 +173,18 @@ module.exports = {
             canCapture: true,
             mustCapture: false,
         },
+        {
+            move: 'lineLeft',
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
+        {
+            move: 'lineRight',
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
     ],
     k: [
         {
@@ -153,6 +207,30 @@ module.exports = {
         },
         {
             move: [0, -1],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
+        {
+            move: [-1, -1],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
+        {
+            move: [1, -1],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
+        {
+            move: [-1, 1],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+        },
+        {
+            move: [1, 1],
             available: -1,
             canCapture: true,
             mustCapture: false,
