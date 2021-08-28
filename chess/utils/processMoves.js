@@ -157,7 +157,7 @@ function processMoves(dimension, currentLocation, mobility, playerColour) {
         }
     });
 
-    return [possibleMoves, playerDirection];
+    return possibleMoves;
 }
 
 module.exports = processMoves;
