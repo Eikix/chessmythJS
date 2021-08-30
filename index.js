@@ -16,5 +16,5 @@ const board = chess.getBoard();
 
 console.log(chess.getBoard());
 // console.log(allowedMoves.n);
-console.log(processMoves(width, '2;5', allowedMoves.n, 'w', board));
+console.log(processMoves(width, '2;5', allowedMoves.n, 'b', board));
 // console.log(chess.getTurn());
