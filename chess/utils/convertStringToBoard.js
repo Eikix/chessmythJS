@@ -9,7 +9,7 @@ will turn into a 10x10 board
 
 */
 
-function convertBoardOptionsToInitialBoard(boardOptions) {
+function convertStringToBoard(boardOptions) {
     const board = {};
 
     const backline = boardOptions?.backline;
@@ -37,8 +37,8 @@ function convertBoardOptionsToInitialBoard(boardOptions) {
     for (let i = 1; i <= width; i++) {
         const coordPlayerOne = `1;${i}`;
         const coordPlayerTwo = `${width};${i}`;
-        board[coordPlayerOne].piece = backline[i - 1];
-        board[coordPlayerTwo].piece = backline[i - 1];
+        board[coordPlayerOne].piece = { type: backline[i - 1], color: 'w' };
+        board[coordPlayerTwo].piece = { type: backline[i - 1], color: 'b' };
     }
 
     // Frontline Assortment
@@ -46,20 +46,26 @@ function convertBoardOptionsToInitialBoard(boardOptions) {
         for (let i = 1; i <= width; i++) {
             const coordPlayerOne = `2;${i}`;
             const coordPlayerTwo = `${width - 1};${i}`;
-            board[coordPlayerOne].piece = 'p';
-            board[coordPlayerTwo].piece = 'p';
+            board[coordPlayerOne].piece = { type: 'p', color: 'w' };
+            board[coordPlayerTwo].piece = { type: 'p', color: 'b' };
         }
     } else {
         frontlineArray = frontline.split('');
         for (let i = 1; i <= width; i++) {
             const coordPlayerOne = `2;${i}`;
             const coordPlayerTwo = `${width - 1};${i}`;
-            board[coordPlayerOne].piece = frontlineArray[i - 1];
-            board[coordPlayerTwo].piece = frontlineArray[i - 1];
+            board[coordPlayerOne].piece = {
+                type: frontlineArray[i - 1],
+                color: 'w',
+            };
+            board[coordPlayerTwo].piece = {
+                type: frontlineArray[i - 1],
+                color: 'b',
+            };
         }
     }
 
     return board;
 }
 
-module.exports = convertBoardOptionsToInitialBoard;
+module.exports = convertStringToBoard;

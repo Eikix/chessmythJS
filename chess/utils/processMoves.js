@@ -1,7 +1,13 @@
 // Will be given board dimension, current piece location, and allowed moves array --> returns possible landing tiles.
 // Note that currentLoc should be expressed as follows: xNumber;yNumber
 
-function processMoves(dimension, currentLocation, mobility, playerColour) {
+function processMoves(
+    dimension,
+    currentLocation,
+    mobility,
+    playerColour,
+    board
+) {
     const playerDirection = playerColour === 'w' ? 1 : -1;
     const possibleMoves = [];
     const reg = /[0-9]+/g;
@@ -12,12 +18,56 @@ function processMoves(dimension, currentLocation, mobility, playerColour) {
         if (move?.available != 0 && Array.isArray(move?.move)) {
             const xMove = move.move[0];
             const yMove = move.move[1];
+
+            // Declaring conditions to make it clearer
+            const playerIsWhiteAndMoveIsOnBoardAhead =
+                playerDirection === 1 &&
+                xCoordAsNumber + parseInt(xMove) <= dimension;
+            const playerIsWhiteAndMoveIsOnBoardBehind =
+                playerDirection === 1 && xCoordAsNumber + parseInt(xMove) >= 1;
+            const playerIsWhiteAndMoveIsOnBoardVertically =
+                playerIsWhiteAndMoveIsOnBoardAhead &&
+                playerIsWhiteAndMoveIsOnBoardBehind;
+            const playerIsBlackAndMoveIsOnBoardAhead =
+                playerDirection === -1 && xCoordAsNumber - parseInt(xMove) >= 1;
+            const playerIsBlackAndMoveIsOnBoardBehind =
+                playerDirection === -1 &&
+                xCoordAsNumber - parseInt(xMove) <= dimension;
+            const playerIsBlackAndMoveIsOnBoardVertically =
+                playerIsBlackAndMoveIsOnBoardAhead &&
+                playerIsBlackAndMoveIsOnBoardBehind;
+            const moveIsOnBoardHorizontally =
+                yCoordAsNumber + parseInt(yMove) <= dimension;
+            const targetCoord =
+                (playerIsWhiteAndMoveIsOnBoardVertically ||
+                    playerIsBlackAndMoveIsOnBoardVertically) &&
+                moveIsOnBoardHorizontally
+                    ? `${xCoordAsNumber + parseInt(xMove) * playerDirection};${
+                          yCoordAsNumber + parseInt(yMove) * playerDirection
+                      }`
+                    : null;
+            console.log(targetCoord);
+            if (!targetCoord) return;
+            const pieceExistsAndIsAllied =
+                board[targetCoord].piece !== null &&
+                board[targetCoord].piece.color === playerColour;
+            const pieceExistsAndIsEnnemy =
+                board[targetCoord].piece !== null &&
+                board[targetCoord].piece.color !== playerColour;
+            const terrainExistsAtLocation = board[targetCoord].terrain;
+            const pieceIsNullButMustCapture =
+                board[targetCoord].piece === null && move.mustCapture;
+            const targetLocationIsAnObstacle =
+                pieceExistsAndIsAllied ||
+                (pieceExistsAndIsEnnemy && !move.canCapture) ||
+                terrainExistsAtLocation ||
+                pieceIsNullButMustCapture;
+
             if (
-                ((playerDirection === 1 &&
-                    xCoordAsNumber + parseInt(xMove) <= dimension) ||
-                    (playerDirection === -1 &&
-                        xCoordAsNumber - parseInt(xMove) >= 1)) &&
-                yCoordAsNumber + parseInt(yMove) <= dimension
+                (playerIsWhiteAndMoveIsOnBoardVertically ||
+                    playerIsBlackAndMoveIsOnBoardVertically) &&
+                moveIsOnBoardHorizontally &&
+                !targetLocationIsAnObstacle
             ) {
                 possibleMoves.push(
                     `${xCoordAsNumber + parseInt(xMove) * playerDirection};${

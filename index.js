@@ -1,18 +1,20 @@
 const processMoves = require('./chess/utils/processMoves');
-const allowedMoves = require('./chess/utils/allowedMoves');
+const allowedMoves = require('./chess/utils/pieceTypeToMoves');
 
 const width = 10;
 const boardOptions = {
     backline: 'rnjbqkbjnr',
     frontline: 'psppppppsp',
     width: width,
+    terrain: ['4;6'],
 };
 
 const Chess = require('./chess/Chess');
 
 const chess = new Chess(boardOptions);
+const board = chess.getBoard();
 
-// console.log(chess.getBoard());
-
-// console.log(allowedMoves.p);
-console.log(processMoves(width, '2;5', allowedMoves.q, 'w'));
+console.log(chess.getBoard());
+// console.log(allowedMoves.n);
+console.log(processMoves(width, '2;5', allowedMoves.n, 'w', board));
+// console.log(chess.getTurn());

@@ -1,4 +1,4 @@
-const convertBoardOptionsToInitialBoard = require("../utils/convertToBoard");
+const convertBoardOptionsToInitialBoard = require('../utils/convertStringToBoard');
 
 class Board {
     #dimension;
@@ -8,21 +8,17 @@ class Board {
         this.board = convertBoardOptionsToInitialBoard(boardOptions);
     }
 
-
     getDimensions() {
         return this.#dimension;
     }
 
     getBoardSize() {
-        return this.#dimension*this.#dimension;
+        return this.#dimension * this.#dimension;
     }
 
     getBoard() {
         return this.board;
     }
-
-
 }
 
-
-module.exports =  Board;
+module.exports = Board;
