@@ -19,7 +19,7 @@ function processMoves(
             const xMove = move.move[0];
             const yMove = move.move[1];
 
-            // Declaring conditions to make it clearer
+            // Declaring conditions to make it clearer. We will need these conditions to generate a legal moves array depending on multiple variables.
             const playerIsWhiteAndMoveIsOnBoardAhead =
                 playerDirection === 1 &&
                 xCoordAsNumber + parseInt(xMove) <= dimension;
