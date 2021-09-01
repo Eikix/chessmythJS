@@ -5,10 +5,10 @@ function processMoves(
     dimension,
     currentLocation,
     mobility,
-    playerColour,
+    playerColor,
     board
 ) {
-    const playerDirection = playerColour === 'w' ? 1 : -1;
+    const playerDirection = playerColor === 'w' ? 1 : -1;
     const possibleMoves = [];
     const reg = /[0-9]+/g;
     const [xCoord, yCoord] = currentLocation.match(reg);
@@ -23,21 +23,28 @@ function processMoves(
             const playerIsWhiteAndMoveIsOnBoardAhead =
                 playerDirection === 1 &&
                 xCoordAsNumber + parseInt(xMove) <= dimension;
+
             const playerIsWhiteAndMoveIsOnBoardBehind =
                 playerDirection === 1 && xCoordAsNumber + parseInt(xMove) >= 1;
+
             const playerIsWhiteAndMoveIsOnBoardVertically =
                 playerIsWhiteAndMoveIsOnBoardAhead &&
                 playerIsWhiteAndMoveIsOnBoardBehind;
+
             const playerIsBlackAndMoveIsOnBoardAhead =
                 playerDirection === -1 && xCoordAsNumber - parseInt(xMove) >= 1;
+
             const playerIsBlackAndMoveIsOnBoardBehind =
                 playerDirection === -1 &&
                 xCoordAsNumber - parseInt(xMove) <= dimension;
+
             const playerIsBlackAndMoveIsOnBoardVertically =
                 playerIsBlackAndMoveIsOnBoardAhead &&
                 playerIsBlackAndMoveIsOnBoardBehind;
+
             const moveIsOnBoardHorizontally =
                 yCoordAsNumber + parseInt(yMove) <= dimension;
+
             const targetCoord =
                 (playerIsWhiteAndMoveIsOnBoardVertically ||
                     playerIsBlackAndMoveIsOnBoardVertically) &&
@@ -46,17 +53,23 @@ function processMoves(
                           yCoordAsNumber + parseInt(yMove) * playerDirection
                       }`
                     : null;
+
             console.log(targetCoord);
             if (!targetCoord) return;
+
             const pieceExistsAndIsAllied =
                 board[targetCoord].piece !== null &&
-                board[targetCoord].piece.color === playerColour;
+                board[targetCoord].piece.color === playerColor;
+
             const pieceExistsAndIsEnnemy =
                 board[targetCoord].piece !== null &&
-                board[targetCoord].piece.color !== playerColour;
+                board[targetCoord].piece.color !== playerColor;
+
             const terrainExistsAtLocation = board[targetCoord].terrain;
+
             const pieceIsNullButMustCapture =
                 board[targetCoord].piece === null && move.mustCapture;
+
             const targetLocationIsAnObstacle =
                 pieceExistsAndIsAllied ||
                 (pieceExistsAndIsEnnemy && !move.canCapture) ||

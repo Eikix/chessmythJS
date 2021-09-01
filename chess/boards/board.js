@@ -1,4 +1,5 @@
 const convertBoardOptionsToInitialBoard = require('../utils/convertStringToBoard');
+const moves = require('../utils/processMoves');
 
 class Board {
     #dimension;
@@ -24,6 +25,24 @@ class Board {
 
     getPiecesAndMoves() {
         return this.#piecesAndMoves;
+    }
+
+    getPossibleMoves(coord, playerColor) {
+        const pieceTypeOnCoord = this.board[coord].piece?.type;
+        if (
+            pieceTypeOnCoord &&
+            this.#piecesAndMoves.hasOwnProperty(pieceTypeOnCoord)
+        ) {
+            return moves(
+                this.#dimension,
+                coord,
+                this.#piecesAndMoves[pieceTypeOnCoord],
+                playerColor,
+                this.board
+            );
+        } else {
+            return [];
+        }
     }
 }
 
