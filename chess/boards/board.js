@@ -44,6 +44,19 @@ class Board {
             return [];
         }
     }
+
+    move(from, to, playerColor) {
+        const moves = this.getPossibleMoves(from, playerColor);
+        if (this.board[from].piece === null) return false;
+        if (moves.includes(to)) {
+            const tmp = this.board[from].piece;
+            this.board[from].piece = null;
+            this.board[to].piece = tmp;
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 module.exports = Board;
