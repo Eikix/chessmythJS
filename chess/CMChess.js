@@ -1,4 +1,4 @@
-const Board = require('./boards/Board');
+const Board = require('./boards/CMBoard');
 
 class Chess extends Board {
     #turn = 0;
