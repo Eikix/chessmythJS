@@ -45,50 +45,55 @@ function processMoves(
             const moveIsOnBoardHorizontally =
                 yCoordAsNumber + parseInt(yMove) <= dimension;
 
-            const targetCoord =
+            const moveIsValid =
                 (playerIsWhiteAndMoveIsOnBoardVertically ||
                     playerIsBlackAndMoveIsOnBoardVertically) &&
-                moveIsOnBoardHorizontally
-                    ? `${xCoordAsNumber + parseInt(xMove) * playerDirection};${
-                          yCoordAsNumber + parseInt(yMove) * playerDirection
-                      }`
-                    : null;
+                moveIsOnBoardHorizontally;
+
+            const targetCoord = moveIsValid
+                ? `${xCoordAsNumber + parseInt(xMove) * playerDirection};${
+                      yCoordAsNumber + parseInt(yMove)
+                  }`
+                : null;
 
             console.log(targetCoord);
-            if (!targetCoord) return;
+            if (!targetCoord) {
+                return;
+            } else {
+                const pieceExistsAndIsAllied =
+                    board[targetCoord].piece !== null &&
+                    board[targetCoord].piece.color === playerColor;
 
-            const pieceExistsAndIsAllied =
-                board[targetCoord].piece !== null &&
-                board[targetCoord].piece.color === playerColor;
+                const pieceExistsAndIsEnnemy =
+                    board[targetCoord].piece !== null &&
+                    board[targetCoord].piece.color !== playerColor;
 
-            const pieceExistsAndIsEnnemy =
-                board[targetCoord].piece !== null &&
-                board[targetCoord].piece.color !== playerColor;
+                const terrainExistsAtLocation = board[targetCoord].terrain;
 
-            const terrainExistsAtLocation = board[targetCoord].terrain;
+                const pieceIsNullButMustCapture =
+                    board[targetCoord].piece === null && move.mustCapture;
 
-            const pieceIsNullButMustCapture =
-                board[targetCoord].piece === null && move.mustCapture;
+                const targetLocationIsAnObstacle =
+                    pieceExistsAndIsAllied ||
+                    (pieceExistsAndIsEnnemy && !move.canCapture) ||
+                    terrainExistsAtLocation ||
+                    pieceIsNullButMustCapture;
 
-            const targetLocationIsAnObstacle =
-                pieceExistsAndIsAllied ||
-                (pieceExistsAndIsEnnemy && !move.canCapture) ||
-                terrainExistsAtLocation ||
-                pieceIsNullButMustCapture;
-
-            if (
-                (playerIsWhiteAndMoveIsOnBoardVertically ||
-                    playerIsBlackAndMoveIsOnBoardVertically) &&
-                moveIsOnBoardHorizontally &&
-                !targetLocationIsAnObstacle
-            ) {
-                possibleMoves.push(
-                    `${xCoordAsNumber + parseInt(xMove) * playerDirection};${
-                        yCoordAsNumber + parseInt(yMove)
-                    }`
-                );
+                if (
+                    (playerIsWhiteAndMoveIsOnBoardVertically ||
+                        playerIsBlackAndMoveIsOnBoardVertically) &&
+                    moveIsOnBoardHorizontally &&
+                    !targetLocationIsAnObstacle
+                ) {
+                    possibleMoves.push(
+                        `${
+                            xCoordAsNumber + parseInt(xMove) * playerDirection
+                        };${yCoordAsNumber + parseInt(yMove)}`
+                    );
+                }
             }
         }
+
         if (move?.available != 0 && typeof move?.move === 'string') {
             switch (move.move) {
                 case 'lineForward':
