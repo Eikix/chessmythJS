@@ -10,14 +10,14 @@ module.exports = {
     ] */
     p: [
         {
-            move: [2, 0],
+            move: [0, 2],
             available: 1,
             canCapture: false,
             mustCapture: false,
             canJumpOver: false,
         },
         {
-            move: [1, 0],
+            move: [0, 1],
             available: -1,
             canCapture: false,
             mustCapture: false,
@@ -31,7 +31,7 @@ module.exports = {
             canJumpOver: false,
         },
         {
-            move: [1, -1],
+            move: [-1, 1],
             available: -1,
             canCapture: true,
             mustCapture: true,
@@ -70,34 +70,7 @@ module.exports = {
     ],
     n: [
         {
-            move: [2, 1],
-            available: -1,
-            canCapture: true,
-            mustCapture: false,
-            canJumpOver: true,
-        },
-        {
-            move: [2, -1],
-            available: -1,
-            canCapture: true,
-            mustCapture: false,
-            canJumpOver: true,
-        },
-        {
             move: [1, 2],
-            available: -1,
-            canCapture: true,
-            mustCapture: false,
-            canJumpOver: true,
-        },
-        {
-            move: [1, -2],
-            available: -1,
-            canCapture: true,
-            canJumpOver: true,
-        },
-        {
-            move: [-1, -2],
             available: -1,
             canCapture: true,
             mustCapture: false,
@@ -111,7 +84,7 @@ module.exports = {
             canJumpOver: true,
         },
         {
-            move: [-2, -1],
+            move: [2, 1],
             available: -1,
             canCapture: true,
             mustCapture: false,
@@ -119,6 +92,33 @@ module.exports = {
         },
         {
             move: [-2, 1],
+            available: -1,
+            canCapture: true,
+            canJumpOver: true,
+        },
+        {
+            move: [-2, -1],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+            canJumpOver: true,
+        },
+        {
+            move: [2, -1],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+            canJumpOver: true,
+        },
+        {
+            move: [-1, -2],
+            available: -1,
+            canCapture: true,
+            mustCapture: false,
+            canJumpOver: true,
+        },
+        {
+            move: [1, -2],
             available: -1,
             canCapture: true,
             mustCapture: false,

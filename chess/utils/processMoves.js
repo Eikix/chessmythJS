@@ -22,28 +22,29 @@ function processMoves(
             // Declaring conditions to make it clearer. We will need these conditions to generate a legal moves array depending on multiple variables.
             const playerIsWhiteAndMoveIsOnBoardAhead =
                 playerDirection === 1 &&
-                xCoordAsNumber + parseInt(xMove) <= dimension;
+                yCoordAsNumber + parseInt(yMove) <= dimension;
 
             const playerIsWhiteAndMoveIsOnBoardBehind =
-                playerDirection === 1 && xCoordAsNumber + parseInt(xMove) >= 1;
+                playerDirection === 1 && yCoordAsNumber + parseInt(yMove) >= 1;
 
             const playerIsWhiteAndMoveIsOnBoardVertically =
                 playerIsWhiteAndMoveIsOnBoardAhead &&
                 playerIsWhiteAndMoveIsOnBoardBehind;
 
             const playerIsBlackAndMoveIsOnBoardAhead =
-                playerDirection === -1 && xCoordAsNumber - parseInt(xMove) >= 1;
+                playerDirection === -1 && yCoordAsNumber - parseInt(yMove) >= 1;
 
             const playerIsBlackAndMoveIsOnBoardBehind =
                 playerDirection === -1 &&
-                xCoordAsNumber - parseInt(xMove) <= dimension;
+                yCoordAsNumber - parseInt(yMove) <= dimension;
 
             const playerIsBlackAndMoveIsOnBoardVertically =
                 playerIsBlackAndMoveIsOnBoardAhead &&
                 playerIsBlackAndMoveIsOnBoardBehind;
 
             const moveIsOnBoardHorizontally =
-                yCoordAsNumber + parseInt(yMove) <= dimension;
+                xCoordAsNumber + parseInt(xMove) <= dimension &&
+                xCoordAsNumber + parseInt(xMove) >= 1;
 
             const moveIsValid =
                 (playerIsWhiteAndMoveIsOnBoardVertically ||
@@ -51,8 +52,8 @@ function processMoves(
                 moveIsOnBoardHorizontally;
 
             const targetCoord = moveIsValid
-                ? `${xCoordAsNumber + parseInt(xMove) * playerDirection};${
-                      yCoordAsNumber + parseInt(yMove)
+                ? `${xCoordAsNumber + parseInt(xMove)};${
+                      yCoordAsNumber + parseInt(yMove) * playerDirection
                   }`
                 : null;
 
@@ -100,29 +101,29 @@ function processMoves(
                     for (let i = 1; i <= dimension; i++) {
                         if (
                             (playerDirection === 1 &&
-                                xCoordAsNumber + i <= dimension) ||
-                            (playerDirection === -1 && xCoordAsNumber - i >= 1)
+                                yCoordAsNumber + i <= dimension) ||
+                            (playerDirection === -1 && yCoordAsNumber - i >= 1)
                         )
                             possibleMoves.push(
-                                `${
-                                    xCoordAsNumber + i * playerDirection
-                                };${yCoord}`
+                                `${xCoordAsNumber};${
+                                    yCoordAsNumber + i * playerDirection
+                                }`
                             );
                     }
                     break;
                 case 'lineLeft':
                     for (let i = 1; i <= dimension; i++) {
-                        if (yCoordAsNumber - i >= 1)
+                        if (xCoordAsNumber - i >= 1)
                             possibleMoves.push(
-                                `${xCoord};${yCoordAsNumber - i}`
+                                `${xCoordAsNumber - i};${yCoordAsNumber}`
                             );
                     }
                     break;
                 case 'lineRight':
                     for (let i = 1; i <= dimension; i++) {
-                        if (yCoordAsNumber + i <= dimension)
+                        if (xCoordAsNumber + i <= dimension)
                             possibleMoves.push(
-                                `${xCoord};${yCoordAsNumber + i}`
+                                `${xCoordAsNumber + i};${yCoordAsNumber}`
                             );
                     }
                     break;
@@ -130,14 +131,14 @@ function processMoves(
                     for (let i = 1; i <= dimension; i++) {
                         if (
                             (playerDirection === 1 &&
-                                xCoordAsNumber - i >= 1) ||
+                                yCoordAsNumber - i >= 1) ||
                             (playerDirection === -1 &&
-                                xCoordAsNumber + i <= dimension)
+                                yCoordAsNumber + i <= dimension)
                         )
                             possibleMoves.push(
-                                `${
-                                    xCoordAsNumber - i * playerDirection
-                                };${yCoord}`
+                                `${xCoordAsNumber};${
+                                    yCoordAsNumber - i * playerDirection
+                                }`
                             );
                     }
                     break;
@@ -149,14 +150,14 @@ function processMoves(
                     ) {
                         if (
                             ((playerDirection === 1 &&
-                                xCoordAsNumber + i <= dimension) ||
+                                yCoordAsNumber + i <= dimension) ||
                                 (playerDirection === -1 &&
-                                    xCoordAsNumber - i >= 1)) &&
-                            yCoordAsNumber + i <= dimension
+                                    yCoordAsNumber - i >= 1)) &&
+                            xCoordAsNumber + i <= dimension
                         )
                             possibleMoves.push(
-                                `${xCoordAsNumber + i * playerDirection};${
-                                    yCoordAsNumber + i
+                                `${xCoordAsNumber + i};${
+                                    yCoordAsNumber + i * playerDirection
                                 }`
                             );
                     }
@@ -169,14 +170,14 @@ function processMoves(
                     ) {
                         if (
                             ((playerDirection === 1 &&
-                                xCoordAsNumber - i >= 1) ||
+                                yCoordAsNumber - i >= 1) ||
                                 (playerDirection === -1 &&
-                                    xCoordAsNumber + i <= dimension)) &&
-                            yCoordAsNumber + i <= dimension
+                                    yCoordAsNumber + i <= dimension)) &&
+                            xCoordAsNumber + i <= dimension
                         )
                             possibleMoves.push(
-                                `${xCoordAsNumber - i * playerDirection};${
-                                    yCoordAsNumber + i
+                                `${xCoordAsNumber + i};${
+                                    yCoordAsNumber - i * playerDirection
                                 }`
                             );
                     }
@@ -189,14 +190,14 @@ function processMoves(
                     ) {
                         if (
                             ((playerDirection === 1 &&
-                                xCoordAsNumber + i <= dimension) ||
+                                yCoordAsNumber + i <= dimension) ||
                                 (playerDirection === -1 &&
-                                    xCoordAsNumber - i >= 1)) &&
-                            yCoordAsNumber - i >= 1
+                                    yCoordAsNumber - i >= 1)) &&
+                            xCoordAsNumber - i >= 1
                         )
                             possibleMoves.push(
-                                `${xCoordAsNumber + i * playerDirection};${
-                                    yCoordAsNumber - i
+                                `${xCoordAsNumber - i};${
+                                    yCoordAsNumber + i * playerDirection
                                 }`
                             );
                     }
@@ -209,14 +210,14 @@ function processMoves(
                     ) {
                         if (
                             ((playerDirection === 1 &&
-                                xCoordAsNumber - i >= 1) ||
+                                yCoordAsNumber - i >= 1) ||
                                 (playerDirection === -1 &&
-                                    xCoordAsNumber + i <= dimension)) &&
-                            yCoordAsNumber - i >= 1
+                                    yCoordAsNumber + i <= dimension)) &&
+                            xCoordAsNumber - i >= 1
                         )
                             possibleMoves.push(
-                                `${xCoordAsNumber - i * playerDirection};${
-                                    yCoordAsNumber - i
+                                `${xCoordAsNumber - i};${
+                                    yCoordAsNumber - i * playerDirection
                                 }`
                             );
                     }

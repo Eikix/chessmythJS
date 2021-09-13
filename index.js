@@ -21,11 +21,11 @@ const dimension = chess.getDimensions();
 // chess.move('3;5', '3;5', 'w');
 console.log(chess.getBoard());
 
-chess.move('2;5', '4;5', 'w');
+// chess.move('1;2', '1;5', 'w');
 
 console.log(chess.getBoard());
 
-// console.log(allPossibleMovesOnBoard(dimension, allowedMoves, 'w', board));
+console.log(allPossibleMovesOnBoard(dimension, allowedMoves, 'w', board));
 
 // console.log(chess.getPiecesAndMoves());
 // console.log(allowedMoves.n);

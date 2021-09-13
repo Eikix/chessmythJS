@@ -35,8 +35,8 @@ function convertStringToBoard(boardOptions) {
     // Backline Assortment //
     backline.split('');
     for (let i = 1; i <= width; i++) {
-        const coordPlayerOne = `1;${i}`;
-        const coordPlayerTwo = `${width};${i}`;
+        const coordPlayerOne = `${i};1`;
+        const coordPlayerTwo = `${i};${width}`;
         board[coordPlayerOne].piece = { type: backline[i - 1], color: 'w' };
         board[coordPlayerTwo].piece = { type: backline[i - 1], color: 'b' };
     }
@@ -44,16 +44,16 @@ function convertStringToBoard(boardOptions) {
     // Frontline Assortment
     if (frontline === 'p') {
         for (let i = 1; i <= width; i++) {
-            const coordPlayerOne = `2;${i}`;
-            const coordPlayerTwo = `${width - 1};${i}`;
+            const coordPlayerOne = `${i};2`;
+            const coordPlayerTwo = `${i};${width - 1}`;
             board[coordPlayerOne].piece = { type: 'p', color: 'w' };
             board[coordPlayerTwo].piece = { type: 'p', color: 'b' };
         }
     } else {
         frontlineArray = frontline.split('');
         for (let i = 1; i <= width; i++) {
-            const coordPlayerOne = `2;${i}`;
-            const coordPlayerTwo = `${width - 1};${i}`;
+            const coordPlayerOne = `${i};2`;
+            const coordPlayerTwo = `${i};${width - 1}`;
             board[coordPlayerOne].piece = {
                 type: frontlineArray[i - 1],
                 color: 'w',
