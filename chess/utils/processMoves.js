@@ -8,12 +8,15 @@ function processMoves(
     playerColor,
     board
 ) {
+    // Checks if player is white, i.e. pieces advancing from 1 to 10, or black, going from 10 to 1.
     const playerDirection = playerColor === 'w' ? 1 : -1;
     const possibleMoves = [];
+    // A regex to capture coordinates in the shape: X;Y.
     const reg = /[0-9]+/g;
     const [xCoord, yCoord] = currentLocation.match(reg);
     const xCoordAsNumber = parseInt(xCoord);
     const yCoordAsNumber = parseInt(yCoord);
+
     mobility.map(move => {
         if (move?.available != 0 && Array.isArray(move?.move)) {
             const xMove = move.move[0];
@@ -103,28 +106,115 @@ function processMoves(
                             (playerDirection === 1 &&
                                 yCoordAsNumber + i <= dimension) ||
                             (playerDirection === -1 && yCoordAsNumber - i >= 1)
-                        )
-                            possibleMoves.push(
-                                `${xCoordAsNumber};${
-                                    yCoordAsNumber + i * playerDirection
-                                }`
-                            );
+                        ) {
+                            const targetCoord = `${xCoordAsNumber};${
+                                yCoordAsNumber + i * playerDirection
+                            }`;
+                            const pieceExistsAndIsAllied =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color === playerColor;
+
+                            const pieceExistsAndIsEnnemy =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color !== playerColor;
+
+                            const terrainExistsAtLocation =
+                                board[targetCoord].terrain;
+
+                            const pieceIsNullButMustCapture =
+                                board[targetCoord].piece === null &&
+                                move.mustCapture;
+
+                            const targetLocationIsAnObstacle =
+                                pieceExistsAndIsAllied ||
+                                (pieceExistsAndIsEnnemy && !move.canCapture) ||
+                                terrainExistsAtLocation ||
+                                pieceIsNullButMustCapture;
+
+                            if (!targetLocationIsAnObstacle) {
+                                possibleMoves.push(
+                                    `${xCoordAsNumber};${
+                                        yCoordAsNumber + i * playerDirection
+                                    }`
+                                );
+                            } else {
+                                break;
+                            }
+                        }
                     }
                     break;
                 case 'lineLeft':
                     for (let i = 1; i <= dimension; i++) {
-                        if (xCoordAsNumber - i >= 1)
-                            possibleMoves.push(
-                                `${xCoordAsNumber - i};${yCoordAsNumber}`
-                            );
+                        if (xCoordAsNumber - i >= 1) {
+                            const targetCoord = `${
+                                xCoordAsNumber - i
+                            };${yCoordAsNumber}`;
+                            const pieceExistsAndIsAllied =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color === playerColor;
+
+                            const pieceExistsAndIsEnnemy =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color !== playerColor;
+
+                            const terrainExistsAtLocation =
+                                board[targetCoord].terrain;
+
+                            const pieceIsNullButMustCapture =
+                                board[targetCoord].piece === null &&
+                                move.mustCapture;
+
+                            const targetLocationIsAnObstacle =
+                                pieceExistsAndIsAllied ||
+                                (pieceExistsAndIsEnnemy && !move.canCapture) ||
+                                terrainExistsAtLocation ||
+                                pieceIsNullButMustCapture;
+
+                            if (!targetLocationIsAnObstacle) {
+                                possibleMoves.push(
+                                    `${xCoordAsNumber - i};${yCoordAsNumber}`
+                                );
+                            } else {
+                                break;
+                            }
+                        }
                     }
                     break;
                 case 'lineRight':
                     for (let i = 1; i <= dimension; i++) {
-                        if (xCoordAsNumber + i <= dimension)
-                            possibleMoves.push(
-                                `${xCoordAsNumber + i};${yCoordAsNumber}`
-                            );
+                        if (xCoordAsNumber + i <= dimension) {
+                            const targetCoord = `${
+                                xCoordAsNumber + i
+                            };${yCoordAsNumber}`;
+                            const pieceExistsAndIsAllied =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color === playerColor;
+
+                            const pieceExistsAndIsEnnemy =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color !== playerColor;
+
+                            const terrainExistsAtLocation =
+                                board[targetCoord].terrain;
+
+                            const pieceIsNullButMustCapture =
+                                board[targetCoord].piece === null &&
+                                move.mustCapture;
+
+                            const targetLocationIsAnObstacle =
+                                pieceExistsAndIsAllied ||
+                                (pieceExistsAndIsEnnemy && !move.canCapture) ||
+                                terrainExistsAtLocation ||
+                                pieceIsNullButMustCapture;
+
+                            if (!targetLocationIsAnObstacle) {
+                                possibleMoves.push(
+                                    `${xCoordAsNumber + i};${yCoordAsNumber}`
+                                );
+                            } else {
+                                break;
+                            }
+                        }
                     }
                     break;
                 case 'lineBackward':
