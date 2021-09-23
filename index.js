@@ -25,9 +25,9 @@ const dimension = chess.getDimensions();
 
 console.log(chess.getBoard());
 
-// console.log(allPossibleMovesOnBoard(dimension, allowedMoves, 'w', board));
+console.log(allPossibleMovesOnBoard(dimension, allowedMoves, 'b', board));
 
 // console.log(chess.getPiecesAndMoves());
 // console.log(allowedMoves.n);
-console.log(processMoves(width, '1;1', allowedMoves.r, 'b', board));
+// console.log(processMoves(width, '5;5', allowedMoves.b, 'w', board));
 // console.log(chess.getTurn());

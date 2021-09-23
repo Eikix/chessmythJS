@@ -90,9 +90,9 @@ function processMoves(
                     !targetLocationIsAnObstacle
                 ) {
                     possibleMoves.push(
-                        `${
-                            xCoordAsNumber + parseInt(xMove) * playerDirection
-                        };${yCoordAsNumber + parseInt(yMove)}`
+                        `${xCoordAsNumber + parseInt(xMove)};${
+                            yCoordAsNumber + parseInt(yMove) * playerDirection
+                        }`
                     );
                 }
             }
@@ -137,6 +137,8 @@ function processMoves(
                                         yCoordAsNumber + i * playerDirection
                                     }`
                                 );
+                                if (pieceExistsAndIsEnnemy && move.canCapture)
+                                    break;
                             } else {
                                 break;
                             }
@@ -174,6 +176,8 @@ function processMoves(
                                 possibleMoves.push(
                                     `${xCoordAsNumber - i};${yCoordAsNumber}`
                                 );
+                                if (pieceExistsAndIsEnnemy && move.canCapture)
+                                    break;
                             } else {
                                 break;
                             }
@@ -211,6 +215,8 @@ function processMoves(
                                 possibleMoves.push(
                                     `${xCoordAsNumber + i};${yCoordAsNumber}`
                                 );
+                                if (pieceExistsAndIsEnnemy && move.canCapture)
+                                    break;
                             } else {
                                 break;
                             }
@@ -224,12 +230,43 @@ function processMoves(
                                 yCoordAsNumber - i >= 1) ||
                             (playerDirection === -1 &&
                                 yCoordAsNumber + i <= dimension)
-                        )
-                            possibleMoves.push(
-                                `${xCoordAsNumber};${
-                                    yCoordAsNumber - i * playerDirection
-                                }`
-                            );
+                        ) {
+                            const targetCoord = `${xCoordAsNumber};${
+                                yCoordAsNumber - i * playerDirection
+                            }`;
+                            const pieceExistsAndIsAllied =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color === playerColor;
+
+                            const pieceExistsAndIsEnnemy =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color !== playerColor;
+
+                            const terrainExistsAtLocation =
+                                board[targetCoord].terrain;
+
+                            const pieceIsNullButMustCapture =
+                                board[targetCoord].piece === null &&
+                                move.mustCapture;
+
+                            const targetLocationIsAnObstacle =
+                                pieceExistsAndIsAllied ||
+                                (pieceExistsAndIsEnnemy && !move.canCapture) ||
+                                terrainExistsAtLocation ||
+                                pieceIsNullButMustCapture;
+
+                            if (!targetLocationIsAnObstacle) {
+                                possibleMoves.push(
+                                    `${xCoordAsNumber};${
+                                        yCoordAsNumber - i * playerDirection
+                                    }`
+                                );
+                                if (pieceExistsAndIsEnnemy && move.canCapture)
+                                    break;
+                            } else {
+                                break;
+                            }
+                        }
                     }
                     break;
                 case 'diagForwardRight':
@@ -244,12 +281,43 @@ function processMoves(
                                 (playerDirection === -1 &&
                                     yCoordAsNumber - i >= 1)) &&
                             xCoordAsNumber + i <= dimension
-                        )
-                            possibleMoves.push(
-                                `${xCoordAsNumber + i};${
-                                    yCoordAsNumber + i * playerDirection
-                                }`
-                            );
+                        ) {
+                            const targetCoord = `${xCoordAsNumber + i};${
+                                yCoordAsNumber + i * playerDirection
+                            }`;
+                            const pieceExistsAndIsAllied =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color === playerColor;
+
+                            const pieceExistsAndIsEnnemy =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color !== playerColor;
+
+                            const terrainExistsAtLocation =
+                                board[targetCoord].terrain;
+
+                            const pieceIsNullButMustCapture =
+                                board[targetCoord].piece === null &&
+                                move.mustCapture;
+
+                            const targetLocationIsAnObstacle =
+                                pieceExistsAndIsAllied ||
+                                (pieceExistsAndIsEnnemy && !move.canCapture) ||
+                                terrainExistsAtLocation ||
+                                pieceIsNullButMustCapture;
+
+                            if (!targetLocationIsAnObstacle) {
+                                possibleMoves.push(
+                                    `${xCoordAsNumber + i};${
+                                        yCoordAsNumber + i * playerDirection
+                                    }`
+                                );
+                                if (pieceExistsAndIsEnnemy && move.canCapture)
+                                    break;
+                            } else {
+                                break;
+                            }
+                        }
                     }
                     break;
                 case 'diagBackwardRight':
@@ -264,12 +332,43 @@ function processMoves(
                                 (playerDirection === -1 &&
                                     yCoordAsNumber + i <= dimension)) &&
                             xCoordAsNumber + i <= dimension
-                        )
-                            possibleMoves.push(
-                                `${xCoordAsNumber + i};${
-                                    yCoordAsNumber - i * playerDirection
-                                }`
-                            );
+                        ) {
+                            const targetCoord = `${xCoordAsNumber + i};${
+                                yCoordAsNumber - i * playerDirection
+                            }`;
+                            const pieceExistsAndIsAllied =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color === playerColor;
+
+                            const pieceExistsAndIsEnnemy =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color !== playerColor;
+
+                            const terrainExistsAtLocation =
+                                board[targetCoord].terrain;
+
+                            const pieceIsNullButMustCapture =
+                                board[targetCoord].piece === null &&
+                                move.mustCapture;
+
+                            const targetLocationIsAnObstacle =
+                                pieceExistsAndIsAllied ||
+                                (pieceExistsAndIsEnnemy && !move.canCapture) ||
+                                terrainExistsAtLocation ||
+                                pieceIsNullButMustCapture;
+
+                            if (!targetLocationIsAnObstacle) {
+                                possibleMoves.push(
+                                    `${xCoordAsNumber + i};${
+                                        yCoordAsNumber - i * playerDirection
+                                    }`
+                                );
+                                if (pieceExistsAndIsEnnemy && move.canCapture)
+                                    break;
+                            } else {
+                                break;
+                            }
+                        }
                     }
                     break;
                 case 'diagForwardLeft':
@@ -284,12 +383,43 @@ function processMoves(
                                 (playerDirection === -1 &&
                                     yCoordAsNumber - i >= 1)) &&
                             xCoordAsNumber - i >= 1
-                        )
-                            possibleMoves.push(
-                                `${xCoordAsNumber - i};${
-                                    yCoordAsNumber + i * playerDirection
-                                }`
-                            );
+                        ) {
+                            const targetCoord = `${xCoordAsNumber - i};${
+                                yCoordAsNumber + i * playerDirection
+                            }`;
+                            const pieceExistsAndIsAllied =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color === playerColor;
+
+                            const pieceExistsAndIsEnnemy =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color !== playerColor;
+
+                            const terrainExistsAtLocation =
+                                board[targetCoord].terrain;
+
+                            const pieceIsNullButMustCapture =
+                                board[targetCoord].piece === null &&
+                                move.mustCapture;
+
+                            const targetLocationIsAnObstacle =
+                                pieceExistsAndIsAllied ||
+                                (pieceExistsAndIsEnnemy && !move.canCapture) ||
+                                terrainExistsAtLocation ||
+                                pieceIsNullButMustCapture;
+
+                            if (!targetLocationIsAnObstacle) {
+                                possibleMoves.push(
+                                    `${xCoordAsNumber - i};${
+                                        yCoordAsNumber + i * playerDirection
+                                    }`
+                                );
+                                if (pieceExistsAndIsEnnemy && move.canCapture)
+                                    break;
+                            } else {
+                                break;
+                            }
+                        }
                     }
                     break;
                 case 'diagBackwardLeft':
@@ -304,12 +434,43 @@ function processMoves(
                                 (playerDirection === -1 &&
                                     yCoordAsNumber + i <= dimension)) &&
                             xCoordAsNumber - i >= 1
-                        )
-                            possibleMoves.push(
-                                `${xCoordAsNumber - i};${
-                                    yCoordAsNumber - i * playerDirection
-                                }`
-                            );
+                        ) {
+                            const targetCoord = `${xCoordAsNumber - i};${
+                                yCoordAsNumber - i * playerDirection
+                            }`;
+                            const pieceExistsAndIsAllied =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color === playerColor;
+
+                            const pieceExistsAndIsEnnemy =
+                                board[targetCoord].piece !== null &&
+                                board[targetCoord].piece.color !== playerColor;
+
+                            const terrainExistsAtLocation =
+                                board[targetCoord].terrain;
+
+                            const pieceIsNullButMustCapture =
+                                board[targetCoord].piece === null &&
+                                move.mustCapture;
+
+                            const targetLocationIsAnObstacle =
+                                pieceExistsAndIsAllied ||
+                                (pieceExistsAndIsEnnemy && !move.canCapture) ||
+                                terrainExistsAtLocation ||
+                                pieceIsNullButMustCapture;
+
+                            if (!targetLocationIsAnObstacle) {
+                                possibleMoves.push(
+                                    `${xCoordAsNumber - i};${
+                                        yCoordAsNumber - i * playerDirection
+                                    }`
+                                );
+                                if (pieceExistsAndIsEnnemy && move.canCapture)
+                                    break;
+                            } else {
+                                break;
+                            }
+                        }
                     }
                     break;
             }
