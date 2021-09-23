@@ -1,5 +1,5 @@
 const convertBoardOptionsToInitialBoard = require('../utils/convertStringToBoard');
-const moves = require('../utils/processMoves');
+const processMoves = require('../utils/processMoves');
 
 class Board {
     #dimension;
@@ -38,7 +38,7 @@ class Board {
             pieceTypeOnCoord &&
             this.#piecesAndMoves.hasOwnProperty(pieceTypeOnCoord)
         ) {
-            return moves(
+            return processMoves(
                 this.#dimension,
                 coord,
                 this.#piecesAndMoves[pieceTypeOnCoord],
@@ -53,7 +53,13 @@ class Board {
     move(from, to, playerColor) {
         const moves = this.getPossibleMoves(from, playerColor);
         if (this.board[from].piece === null) return false;
-        if (moves.includes(to)) {
+        let targetMove = null;
+        console.log(moves);
+        for (let move of moves) {
+            // Checking if the target coordinate is present in the array of move objects.
+            if (move.move === to) targetMove = move;
+        }
+        if (targetMove) {
             // Keep in memory king's position
             if (
                 this.board[from].piece.type === 'k' &&
@@ -63,8 +69,20 @@ class Board {
                 if (playerColor === 'b') this.bKing = to;
             }
 
+            if (
+                targetMove?.isSpecialMove &&
+                this.board[from].piece.specialMoveCharges === 0
+            ) {
+                return false;
+            }
             // Moves the piece
             const tmp = this.board[from].piece;
+            if (
+                targetMove?.isSpecialMove &&
+                this.board[from].piece.specialMoveCharges > 0
+            ) {
+                tmp.specialMoveCharges -= 1;
+            }
             this.board[from].piece = null;
             this.board[to].piece = tmp;
             return true;

@@ -18,7 +18,13 @@ function processMoves(
     const yCoordAsNumber = parseInt(yCoord);
 
     mobility.map(move => {
-        if (move?.available != 0 && Array.isArray(move?.move)) {
+        if (Array.isArray(move?.move)) {
+            if (
+                move.isSpecialMove &&
+                board[currentLocation].piece.specialMoveCharges === 0
+            ) {
+                return;
+            }
             const xMove = move.move[0];
             const yMove = move.move[1];
 
@@ -82,22 +88,35 @@ function processMoves(
                     terrainExistsAtLocation ||
                     pieceIsNullButMustCapture;
 
+                const flag =
+                    pieceExistsAndIsEnnemy && move.canCapture
+                        ? 'capture'
+                        : 'move';
+
                 if (
                     (playerIsWhiteAndMoveIsOnBoardVertically ||
                         playerIsBlackAndMoveIsOnBoardVertically) &&
                     moveIsOnBoardHorizontally &&
                     !targetLocationIsAnObstacle
                 ) {
-                    possibleMoves.push(
-                        `${xCoordAsNumber + parseInt(xMove)};${
+                    possibleMoves.push({
+                        move: `${xCoordAsNumber + parseInt(xMove)};${
                             yCoordAsNumber + parseInt(yMove) * playerDirection
-                        }`
-                    );
+                        }`,
+                        flag: flag,
+                        isSpecialMove: move.isSpecialMove,
+                    });
                 }
             }
         }
 
-        if (move?.available != 0 && typeof move?.move === 'string') {
+        if (typeof move?.move === 'string') {
+            if (
+                move.isSpecialMove &&
+                board[currentLocation].piece.specialMoveCharges === 0
+            ) {
+                return;
+            }
             switch (move.move) {
                 case 'lineForward':
                     for (let i = 1; i <= dimension; i++) {
@@ -130,13 +149,24 @@ function processMoves(
                                 terrainExistsAtLocation ||
                                 pieceIsNullButMustCapture;
 
+                            const flag =
+                                pieceExistsAndIsEnnemy && move.canCapture
+                                    ? 'capture'
+                                    : 'move';
+
                             if (!targetLocationIsAnObstacle) {
-                                possibleMoves.push(
-                                    `${xCoordAsNumber};${
+                                possibleMoves.push({
+                                    move: `${xCoordAsNumber};${
                                         yCoordAsNumber + i * playerDirection
-                                    }`
-                                );
-                                if (pieceExistsAndIsEnnemy && move.canCapture)
+                                    }`,
+                                    flag: flag,
+                                    isSpecialMove: move.isSpecialMove,
+                                });
+                                if (
+                                    pieceExistsAndIsEnnemy &&
+                                    move.canCapture &&
+                                    !move.canJumpOver
+                                )
                                     break;
                             } else {
                                 break;
@@ -171,10 +201,19 @@ function processMoves(
                                 terrainExistsAtLocation ||
                                 pieceIsNullButMustCapture;
 
+                            const flag =
+                                pieceExistsAndIsEnnemy && move.canCapture
+                                    ? 'capture'
+                                    : 'move';
+
                             if (!targetLocationIsAnObstacle) {
-                                possibleMoves.push(
-                                    `${xCoordAsNumber - i};${yCoordAsNumber}`
-                                );
+                                possibleMoves.push({
+                                    move: `${
+                                        xCoordAsNumber - i
+                                    };${yCoordAsNumber}`,
+                                    flag: flag,
+                                    isSpecialMove: move.isSpecialMove,
+                                });
                                 if (pieceExistsAndIsEnnemy && move.canCapture)
                                     break;
                             } else {
@@ -210,10 +249,19 @@ function processMoves(
                                 terrainExistsAtLocation ||
                                 pieceIsNullButMustCapture;
 
+                            const flag =
+                                pieceExistsAndIsEnnemy && move.canCapture
+                                    ? 'capture'
+                                    : 'move';
+
                             if (!targetLocationIsAnObstacle) {
-                                possibleMoves.push(
-                                    `${xCoordAsNumber + i};${yCoordAsNumber}`
-                                );
+                                possibleMoves.push({
+                                    move: `${
+                                        xCoordAsNumber + i
+                                    };${yCoordAsNumber}`,
+                                    flag: flag,
+                                    isSpecialMove: move.isSpecialMove,
+                                });
                                 if (pieceExistsAndIsEnnemy && move.canCapture)
                                     break;
                             } else {
@@ -254,12 +302,19 @@ function processMoves(
                                 terrainExistsAtLocation ||
                                 pieceIsNullButMustCapture;
 
+                            const flag =
+                                pieceExistsAndIsEnnemy && move.canCapture
+                                    ? 'capture'
+                                    : 'move';
+
                             if (!targetLocationIsAnObstacle) {
-                                possibleMoves.push(
-                                    `${xCoordAsNumber};${
+                                possibleMoves.push({
+                                    move: `${xCoordAsNumber};${
                                         yCoordAsNumber - i * playerDirection
-                                    }`
-                                );
+                                    }`,
+                                    flag: flag,
+                                    isSpecialMove: move.isSpecialMove,
+                                });
                                 if (pieceExistsAndIsEnnemy && move.canCapture)
                                     break;
                             } else {
@@ -305,12 +360,19 @@ function processMoves(
                                 terrainExistsAtLocation ||
                                 pieceIsNullButMustCapture;
 
+                            const flag =
+                                pieceExistsAndIsEnnemy && move.canCapture
+                                    ? 'capture'
+                                    : 'move';
+
                             if (!targetLocationIsAnObstacle) {
-                                possibleMoves.push(
-                                    `${xCoordAsNumber + i};${
+                                possibleMoves.push({
+                                    move: `${xCoordAsNumber + i};${
                                         yCoordAsNumber + i * playerDirection
-                                    }`
-                                );
+                                    }`,
+                                    flag: flag,
+                                    isSpecialMove: move.isSpecialMove,
+                                });
                                 if (pieceExistsAndIsEnnemy && move.canCapture)
                                     break;
                             } else {
@@ -356,12 +418,19 @@ function processMoves(
                                 terrainExistsAtLocation ||
                                 pieceIsNullButMustCapture;
 
+                            const flag =
+                                pieceExistsAndIsEnnemy && move.canCapture
+                                    ? 'capture'
+                                    : 'move';
+
                             if (!targetLocationIsAnObstacle) {
-                                possibleMoves.push(
-                                    `${xCoordAsNumber + i};${
+                                possibleMoves.push({
+                                    move: `${xCoordAsNumber + i};${
                                         yCoordAsNumber - i * playerDirection
-                                    }`
-                                );
+                                    }`,
+                                    flag: flag,
+                                    isSpecialMove: move.isSpecialMove,
+                                });
                                 if (pieceExistsAndIsEnnemy && move.canCapture)
                                     break;
                             } else {
@@ -407,12 +476,19 @@ function processMoves(
                                 terrainExistsAtLocation ||
                                 pieceIsNullButMustCapture;
 
+                            const flag =
+                                pieceExistsAndIsEnnemy && move.canCapture
+                                    ? 'capture'
+                                    : 'move';
+
                             if (!targetLocationIsAnObstacle) {
-                                possibleMoves.push(
-                                    `${xCoordAsNumber - i};${
+                                possibleMoves.push({
+                                    move: `${xCoordAsNumber - i};${
                                         yCoordAsNumber + i * playerDirection
-                                    }`
-                                );
+                                    }`,
+                                    flag: flag,
+                                    isSpecialMove: move.isSpecialMove,
+                                });
                                 if (pieceExistsAndIsEnnemy && move.canCapture)
                                     break;
                             } else {
@@ -458,12 +534,19 @@ function processMoves(
                                 terrainExistsAtLocation ||
                                 pieceIsNullButMustCapture;
 
+                            const flag =
+                                pieceExistsAndIsEnnemy && move.canCapture
+                                    ? 'capture'
+                                    : 'move';
+
                             if (!targetLocationIsAnObstacle) {
-                                possibleMoves.push(
-                                    `${xCoordAsNumber - i};${
+                                possibleMoves.push({
+                                    move: `${xCoordAsNumber - i};${
                                         yCoordAsNumber - i * playerDirection
-                                    }`
-                                );
+                                    }`,
+                                    flag: flag,
+                                    isSpecialMove: move.isSpecialMove,
+                                });
                                 if (pieceExistsAndIsEnnemy && move.canCapture)
                                     break;
                             } else {

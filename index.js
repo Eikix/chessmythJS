@@ -23,11 +23,20 @@ const dimension = chess.getDimensions();
 // chess.move('3;5', '3;5', 'w');
 //console.log(chess.getBoard());
 
-// chess.move('1;2', '1;5', 'w');
+// console.log(chess.getBoard());
+
+// const moves = allPossibleMovesOnBoard(dimension, allowedMoves, 'b', board);
+
+// const keys = Object.keys(moves);
+
+// for (let key of keys) {
+//     console.log(moves[key]);
+// }
+
+console.log(chess.move('5;9', '5;7', 'b'));
+console.log(chess.move('5;7', '5;5', 'b'));
 
 console.log(chess.getBoard());
-
-console.log(allPossibleMovesOnBoard(dimension, allowedMoves, 'b', board));
 
 // console.log(chess.getPiecesAndMoves());
 // console.log(allowedMoves.n);
