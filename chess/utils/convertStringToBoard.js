@@ -9,9 +9,8 @@ will turn into a 10x10 board
 
 */
 
-function convertStringToBoard(boardOptions) {
+function convertStringToBoard(boardOptions, piecesAndMoves) {
     const board = {};
-
     const backline = boardOptions?.backline;
     const frontline = boardOptions?.frontline;
     const width = boardOptions?.width;
@@ -37,8 +36,31 @@ function convertStringToBoard(boardOptions) {
     for (let i = 1; i <= width; i++) {
         const coordPlayerOne = `${i};1`;
         const coordPlayerTwo = `${i};${width}`;
-        board[coordPlayerOne].piece = { type: backline[i - 1], color: 'w' };
-        board[coordPlayerTwo].piece = { type: backline[i - 1], color: 'b' };
+        board[coordPlayerOne].piece = {
+            type: backline[i - 1],
+            color: 'w',
+            specialMoveCharges: -1,
+        };
+        board[coordPlayerTwo].piece = {
+            type: backline[i - 1],
+            color: 'b',
+            specialMoveCharges: -1,
+        };
+        for (move of piecesAndMoves[backline[i - 1]]) {
+            if (move.isSpecialMove) {
+                board[coordPlayerOne].piece = {
+                    type: backline[i - 1],
+                    color: 'w',
+                    specialMoveCharges: move.available,
+                };
+                board[coordPlayerTwo].piece = {
+                    type: backline[i - 1],
+                    color: 'b',
+                    specialMoveCharges: move.available,
+                };
+                break;
+            }
+        }
     }
 
     // Frontline Assortment
@@ -46,8 +68,16 @@ function convertStringToBoard(boardOptions) {
         for (let i = 1; i <= width; i++) {
             const coordPlayerOne = `${i};2`;
             const coordPlayerTwo = `${i};${width - 1}`;
-            board[coordPlayerOne].piece = { type: 'p', color: 'w' };
-            board[coordPlayerTwo].piece = { type: 'p', color: 'b' };
+            board[coordPlayerOne].piece = {
+                type: 'p',
+                color: 'w',
+                specialMoveCharges: 1,
+            };
+            board[coordPlayerTwo].piece = {
+                type: 'p',
+                color: 'b',
+                specialMoveCharges: 1,
+            };
         }
     } else {
         frontlineArray = frontline.split('');
@@ -57,11 +87,28 @@ function convertStringToBoard(boardOptions) {
             board[coordPlayerOne].piece = {
                 type: frontlineArray[i - 1],
                 color: 'w',
+                specialMoveCharges: -1,
             };
             board[coordPlayerTwo].piece = {
                 type: frontlineArray[i - 1],
                 color: 'b',
+                specialMoveCharges: -1,
             };
+            for (move of piecesAndMoves[frontlineArray[i - 1]]) {
+                if (move.isSpecialMove) {
+                    board[coordPlayerOne].piece = {
+                        type: frontlineArray[i - 1],
+                        color: 'w',
+                        specialMoveCharges: move.available,
+                    };
+                    board[coordPlayerTwo].piece = {
+                        type: frontlineArray[i - 1],
+                        color: 'b',
+                        specialMoveCharges: move.available,
+                    };
+                    break;
+                }
+            }
         }
     }
 

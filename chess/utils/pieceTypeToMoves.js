@@ -12,12 +12,14 @@ module.exports = {
         {
             move: [0, 2],
             available: 1,
+            isSpecialMove: true,
             canCapture: false,
             mustCapture: false,
             canJumpOver: false,
         },
         {
             move: [0, 1],
+            isSpecialMove: false,
             available: -1,
             canCapture: false,
             mustCapture: false,
@@ -26,6 +28,7 @@ module.exports = {
         {
             move: [1, 1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: true,
             canJumpOver: false,
@@ -33,6 +36,7 @@ module.exports = {
         {
             move: [-1, 1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: true,
             canJumpOver: false,
@@ -42,6 +46,7 @@ module.exports = {
         {
             move: 'lineForward',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -49,6 +54,7 @@ module.exports = {
         {
             move: 'lineBackward',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -56,6 +62,7 @@ module.exports = {
         {
             move: 'lineLeft',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -63,6 +70,7 @@ module.exports = {
         {
             move: 'lineRight',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -72,6 +80,7 @@ module.exports = {
         {
             move: [1, 2],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: true,
@@ -79,6 +88,7 @@ module.exports = {
         {
             move: [-1, 2],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: true,
@@ -86,6 +96,7 @@ module.exports = {
         {
             move: [2, 1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: true,
@@ -93,12 +104,14 @@ module.exports = {
         {
             move: [-2, 1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             canJumpOver: true,
         },
         {
             move: [-2, -1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: true,
@@ -106,6 +119,7 @@ module.exports = {
         {
             move: [2, -1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: true,
@@ -113,6 +127,7 @@ module.exports = {
         {
             move: [-1, -2],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: true,
@@ -120,6 +135,7 @@ module.exports = {
         {
             move: [1, -2],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: true,
@@ -129,6 +145,7 @@ module.exports = {
         {
             move: 'diagForwardRight',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -136,6 +153,7 @@ module.exports = {
         {
             move: 'diagForwardLeft',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -143,6 +161,7 @@ module.exports = {
         {
             move: 'diagBackwardRight',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -150,6 +169,7 @@ module.exports = {
         {
             move: 'diagBackwardLeft',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -159,6 +179,7 @@ module.exports = {
         {
             move: 'diagForwardRight',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -166,6 +187,7 @@ module.exports = {
         {
             move: 'diagForwardLeft',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -173,6 +195,7 @@ module.exports = {
         {
             move: 'diagBackwardRight',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -180,6 +203,7 @@ module.exports = {
         {
             move: 'diagBackwardLeft',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -187,6 +211,7 @@ module.exports = {
         {
             move: 'lineForward',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -194,6 +219,7 @@ module.exports = {
         {
             move: 'lineBackward',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -201,6 +227,7 @@ module.exports = {
         {
             move: 'lineLeft',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -208,6 +235,7 @@ module.exports = {
         {
             move: 'lineRight',
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -217,6 +245,7 @@ module.exports = {
         {
             move: [1, 0],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -224,6 +253,7 @@ module.exports = {
         {
             move: [0, 1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -231,6 +261,7 @@ module.exports = {
         {
             move: [-1, 0],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -238,6 +269,7 @@ module.exports = {
         {
             move: [0, -1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -245,6 +277,7 @@ module.exports = {
         {
             move: [-1, -1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -252,6 +285,7 @@ module.exports = {
         {
             move: [1, -1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -259,6 +293,7 @@ module.exports = {
         {
             move: [-1, 1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,
@@ -266,6 +301,7 @@ module.exports = {
         {
             move: [1, 1],
             available: -1,
+            isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
             canJumpOver: false,

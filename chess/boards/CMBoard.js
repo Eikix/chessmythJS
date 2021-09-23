@@ -7,7 +7,10 @@ class Board {
     constructor(boardOptions, piecesAndMoves) {
         this.#dimension = boardOptions?.width || 0;
         // Initial board is an object with keys of format "NumberNumber" as strings. Example first row fifth column is "15" and entries of format: {piece: null || str, terrain: null | str}
-        this.board = convertBoardOptionsToInitialBoard(boardOptions);
+        this.board = convertBoardOptionsToInitialBoard(
+            boardOptions,
+            piecesAndMoves
+        );
         this.#piecesAndMoves = piecesAndMoves;
         this.wKing = boardOptions?.wKing;
         this.bKing = boardOptions?.bKing;
