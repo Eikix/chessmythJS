@@ -73,8 +73,20 @@ class Board {
                 targetMove?.isSpecialMove &&
                 this.board[from].piece.specialMoveCharges === 0
             ) {
+                // Checks if the piece still has special move charges
                 return false;
             }
+
+            // Checks if the piece is a pawn, and if they are moving for the first time, but only one tile.
+            // In this case, their ability to move two tiles forward is depleted.
+            if (
+                this.board[from].piece.type === 'p' &&
+                !targetMove?.isSpecialMove &&
+                this.board[from].piece.specialMoveCharges === 1
+            ) {
+                this.board[from].piece.specialMoveCharges -= 1;
+            }
+
             // Moves the piece
             const tmp = this.board[from].piece;
             if (
