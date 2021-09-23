@@ -10,6 +10,8 @@ const boardOptions = {
     width: width,
     terrain: ['4;6'],
     mana: ['3;6', '7;8'],
+    wKing: '6;1',
+    bKing: '6;10',
 };
 
 const Chess = require('./chess/CMChess');

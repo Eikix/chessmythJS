@@ -60,7 +60,6 @@ function processMoves(
                   }`
                 : null;
 
-            console.log(targetCoord);
             if (!targetCoord) {
                 return;
             } else {
