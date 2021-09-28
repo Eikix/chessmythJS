@@ -1,6 +1,8 @@
 // Will be given board dimension, current piece location, and allowed moves array --> returns possible landing tiles.
 // Note that currentLoc should be expressed as follows: xNumber;yNumber
 
+const checkTargetCoordIsCapturable = require('./checkTargetCoordIsCapturable');
+const checkTargetCoordIsObstacle = require('./checkTargetCoordIsObstacle');
 const generatePaths = require('./generatePaths');
 
 function processMoves(
@@ -79,37 +81,55 @@ function processMoves(
                 );
 
                 console.log(pathXthenY, pathYthenX);
+                const obstacleOnPathXthenY = [];
+                const obstacleOnPathYthenX = [];
 
-                const pieceExistsAndIsAllied =
-                    board[targetCoord].piece !== null &&
-                    board[targetCoord].piece.color === playerColor;
+                for (let coord of pathXthenY) {
+                    obstacleOnPathXthenY.push(
+                        checkTargetCoordIsObstacle(
+                            coord,
+                            board,
+                            move,
+                            playerColor
+                        )
+                    );
+                }
 
-                const pieceExistsAndIsEnnemy =
-                    board[targetCoord].piece !== null &&
-                    board[targetCoord].piece.color !== playerColor;
-
-                const terrainExistsAtLocation = board[targetCoord].terrain;
-
-                const pieceIsNullButMustCapture =
-                    board[targetCoord].piece === null && move.mustCapture;
-
-                const targetLocationIsAnObstacle =
-                    pieceExistsAndIsAllied ||
-                    (pieceExistsAndIsEnnemy && !move.canCapture) ||
-                    terrainExistsAtLocation ||
-                    pieceIsNullButMustCapture;
-
-                const flag =
-                    pieceExistsAndIsEnnemy && move.canCapture
-                        ? 'capture'
-                        : 'move';
+                for (let coord of pathYthenX) {
+                    obstacleOnPathYthenX.push(
+                        checkTargetCoordIsObstacle(
+                            coord,
+                            board,
+                            move,
+                            playerColor
+                        )
+                    );
+                }
+                console.log(obstacleOnPathXthenY, obstacleOnPathYthenX);
 
                 if (
-                    (playerIsWhiteAndMoveIsOnBoardVertically ||
-                        playerIsBlackAndMoveIsOnBoardVertically) &&
-                    moveIsOnBoardHorizontally &&
-                    !targetLocationIsAnObstacle
+                    obstacleOnPathYthenX.includes(true) &&
+                    obstacleOnPathXthenY.includes(true) &&
+                    !move.canJumpOver
                 ) {
+                    return;
+                }
+
+                const capturableEnnemyOnTargetCoord =
+                    checkTargetCoordIsCapturable(
+                        targetCoord,
+                        board,
+                        move,
+                        playerColor
+                    );
+                const flag = capturableEnnemyOnTargetCoord ? 'capture' : 'move';
+                const targetCoordIsAnObstacle = checkTargetCoordIsObstacle(
+                    targetCoord,
+                    board,
+                    move,
+                    playerColor
+                );
+                if (!targetCoordIsAnObstacle) {
                     possibleMoves.push({
                         move: `${xCoordAsNumber + parseInt(xMove)};${
                             yCoordAsNumber + parseInt(yMove) * playerDirection
