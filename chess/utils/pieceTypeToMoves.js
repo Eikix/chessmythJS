@@ -106,6 +106,7 @@ module.exports = {
             available: -1,
             isSpecialMove: false,
             canCapture: true,
+            mustCapture: false,
             canJumpOver: true,
         },
         {

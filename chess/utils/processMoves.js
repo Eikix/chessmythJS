@@ -84,10 +84,10 @@ function processMoves(
                 const obstacleOnPathXthenY = [];
                 const obstacleOnPathYthenX = [];
 
-                for (let coord of pathXthenY) {
+                for (let coordXthenY of pathXthenY) {
                     obstacleOnPathXthenY.push(
                         checkTargetCoordIsObstacle(
-                            coord,
+                            coordXthenY,
                             board,
                             move,
                             playerColor
@@ -95,10 +95,10 @@ function processMoves(
                     );
                 }
 
-                for (let coord of pathYthenX) {
+                for (let coordYthenX of pathYthenX) {
                     obstacleOnPathYthenX.push(
                         checkTargetCoordIsObstacle(
-                            coord,
+                            coordYthenX,
                             board,
                             move,
                             playerColor

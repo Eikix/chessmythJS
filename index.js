@@ -40,5 +40,5 @@ console.log(chess.getBoard());
 
 // console.log(chess.getPiecesAndMoves());
 // console.log(allowedMoves.n);
-console.log(processMoves(width, '2;3', allowedMoves.k, 'w', board));
+console.log(processMoves(width, '6;3', allowedMoves.n, 'w', board));
 // console.log(chess.getTurn());
