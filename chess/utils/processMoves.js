@@ -1,6 +1,8 @@
 // Will be given board dimension, current piece location, and allowed moves array --> returns possible landing tiles.
 // Note that currentLoc should be expressed as follows: xNumber;yNumber
 
+const generatePaths = require('./generatePaths');
+
 function processMoves(
     dimension,
     currentLocation,
@@ -69,6 +71,15 @@ function processMoves(
             if (!targetCoord) {
                 return;
             } else {
+                const [pathXthenY, pathYthenX] = generatePaths(
+                    xCoordAsNumber,
+                    yCoordAsNumber,
+                    xMove,
+                    yMove
+                );
+
+                console.log(pathXthenY, pathYthenX);
+
                 const pieceExistsAndIsAllied =
                     board[targetCoord].piece !== null &&
                     board[targetCoord].piece.color === playerColor;

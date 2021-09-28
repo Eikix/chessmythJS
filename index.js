@@ -33,12 +33,12 @@ const dimension = chess.getDimensions();
 //     console.log(moves[key]);
 // }
 
-console.log(chess.move('5;9', '5;8', 'b'));
-console.log(chess.move('5;8', '5;6', 'b'));
+// console.log(chess.move('5;9', '5;8', 'b'));
+// console.log(chess.move('5;8', '5;6', 'b'));
 
-console.log(chess.getBoard());
+// console.log(chess.getBoard());
 
 // console.log(chess.getPiecesAndMoves());
 // console.log(allowedMoves.n);
-// console.log(processMoves(width, '5;5', allowedMoves.b, 'w', board));
+console.log(processMoves(width, '5;5', allowedMoves.n, 'w', board));
 // console.log(chess.getTurn());
