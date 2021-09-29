@@ -33,6 +33,7 @@ function processMoves(
             const yMove = move.move[1];
 
             // Declaring conditions to make it clearer. We will need these conditions to generate a legal moves array depending on multiple variables.
+            // This checks if the piece's movement is on board.
             const playerIsWhiteAndMoveIsOnBoardAhead =
                 playerDirection === 1 &&
                 yCoordAsNumber + parseInt(yMove) <= dimension;
@@ -70,14 +71,19 @@ function processMoves(
                   }`
                 : null;
 
+            // If the move isn't valid, targetCoord (the wanted coord to land on) is given the value null.
+            // This if statements allows for exiting the current context of .map() and go to the next movement.
             if (!targetCoord) {
                 return;
             } else {
+                // This is made to spot obstacles on the way. Since any [X, Y] movement has two possible ways of occurring (it has more but we don't account for them)
+                // Path X then Y means the piece moves along the X axis then the Y axis and vice versa for Path Y then X.
                 const [pathXthenY, pathYthenX] = generatePaths(
                     xCoordAsNumber,
                     yCoordAsNumber,
                     xMove,
-                    yMove
+                    yMove,
+                    playerColor
                 );
 
                 console.log(pathXthenY, pathYthenX);
@@ -107,6 +113,9 @@ function processMoves(
                 }
                 console.log(obstacleOnPathXthenY, obstacleOnPathYthenX);
 
+                // This if statement is made to check if there are obstacles on both paths.
+                // That means our piece cannot dodge them unless it can jump over (move.canJumpOver property).
+
                 if (
                     obstacleOnPathYthenX.includes(true) &&
                     obstacleOnPathXthenY.includes(true) &&
@@ -123,6 +132,8 @@ function processMoves(
                         playerColor
                     );
                 const flag = capturableEnnemyOnTargetCoord ? 'capture' : 'move';
+
+                // Even if the piece can jump over, we still need to check if target coord is itself an obstacle.
                 const targetCoordIsAnObstacle = checkTargetCoordIsObstacle(
                     targetCoord,
                     board,

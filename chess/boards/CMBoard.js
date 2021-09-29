@@ -69,11 +69,11 @@ class Board {
                 if (playerColor === 'b') this.bKing = to;
             }
 
+            // Checks if the piece still has special move charges
             if (
-                targetMove?.isSpecialMove &&
+                targetMove.isSpecialMove &&
                 this.board[from].piece.specialMoveCharges === 0
             ) {
-                // Checks if the piece still has special move charges
                 return false;
             }
 
@@ -81,7 +81,7 @@ class Board {
             // In this case, their ability to move two tiles forward is depleted.
             if (
                 this.board[from].piece.type === 'p' &&
-                !targetMove?.isSpecialMove &&
+                !targetMove.isSpecialMove &&
                 this.board[from].piece.specialMoveCharges === 1
             ) {
                 this.board[from].piece.specialMoveCharges -= 1;
@@ -90,7 +90,7 @@ class Board {
             // Moves the piece
             const tmp = this.board[from].piece;
             if (
-                targetMove?.isSpecialMove &&
+                targetMove.isSpecialMove &&
                 this.board[from].piece.specialMoveCharges > 0
             ) {
                 tmp.specialMoveCharges -= 1;

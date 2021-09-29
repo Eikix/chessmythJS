@@ -36,9 +36,15 @@ const dimension = chess.getDimensions();
 // console.log(chess.move('5;9', '5;8', 'b'));
 // console.log(chess.move('5;8', '5;6', 'b'));
 
-console.log(chess.getBoard());
+// console.log(chess.getBoard());
 
 // console.log(chess.getPiecesAndMoves());
 // console.log(allowedMoves.n);
-console.log(processMoves(width, '6;3', allowedMoves.n, 'w', board));
+// console.log(processMoves(width, '6;3', allowedMoves.n, 'w', board));
 // console.log(chess.getTurn());
+console.log(board);
+
+chess.moveTo('1;2', '1;4', 'w');
+chess.moveTo('1;9', '1;8', 'b');
+
+console.log(chess.getBoard());
