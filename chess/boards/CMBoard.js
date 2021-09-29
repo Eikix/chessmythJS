@@ -1,5 +1,6 @@
-const convertBoardOptionsToInitialBoard = require('../utils/convertStringToBoard');
-const processMoves = require('../utils/processMoves');
+const convertBoardOptionsToInitialBoard = require('../utils/helpers/convertStringToBoard');
+const allPossibleMovesOnBoard = require('../utils/moves/allPossibleMovesOnBoard');
+const processMoves = require('../utils/moves/processMoves');
 
 class Board {
     #dimension;
@@ -16,7 +17,7 @@ class Board {
         this.bKing = boardOptions?.bKing;
     }
 
-    getDimensions() {
+    getDimension() {
         return this.#dimension;
     }
 

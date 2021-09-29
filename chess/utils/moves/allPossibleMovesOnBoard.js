@@ -1,7 +1,14 @@
 const processMoves = require('./processMoves');
 
-function allPossibleMovesOnBoard(dimension, mobility, playerColor, board) {
+function allPossibleMovesOnBoard(
+    dimension,
+    mobility,
+    playerColor,
+    board,
+    verbose = true
+) {
     const allPossibleMoves = {};
+    const allPossibleMovesArray = [];
     for (let x = 1; x <= dimension; x++) {
         for (let y = 1; y <= dimension; y++) {
             const coord = `${x};${y}`;
@@ -16,14 +23,24 @@ function allPossibleMovesOnBoard(dimension, mobility, playerColor, board) {
                     playerColor,
                     board
                 );
-                allPossibleMoves[coord] = {
-                    moves: moves,
-                    piece: board[coord].piece.type,
-                };
+                if (verbose) {
+                    allPossibleMoves[coord] = {
+                        moves: moves,
+                        piece: board[coord].piece.type,
+                    };
+                } else {
+                    for (let move of moves) {
+                        allPossibleMovesArray.push(move?.move);
+                    }
+                }
             }
         }
     }
-    return allPossibleMoves;
+    if (verbose) {
+        return allPossibleMoves;
+    } else {
+        return allPossibleMovesArray;
+    }
 }
 
 module.exports = allPossibleMovesOnBoard;

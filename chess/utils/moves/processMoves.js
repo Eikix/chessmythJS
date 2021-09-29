@@ -1,9 +1,10 @@
 // Will be given board dimension, current piece location, and allowed moves array --> returns possible landing tiles.
 // Note that currentLoc should be expressed as follows: xNumber;yNumber
 
-const checkTargetCoordIsCapturable = require('./checkTargetCoordIsCapturable');
-const checkTargetCoordIsObstacle = require('./checkTargetCoordIsObstacle');
-const generatePaths = require('./generatePaths');
+const checkTargetCoordIsCapturable = require('../helpers/checkTargetCoordIsCapturable');
+const checkTargetCoordIsObstacle = require('../helpers/checkTargetCoordIsObstacle');
+const generatePaths = require('../helpers/generatePaths');
+const DEBUG = false;
 
 function processMoves(
     dimension,
@@ -86,7 +87,7 @@ function processMoves(
                     playerColor
                 );
 
-                console.log(pathXthenY, pathYthenX);
+                if (DEBUG) console.log(pathXthenY, pathYthenX);
                 const obstacleOnPathXthenY = [];
                 const obstacleOnPathYthenX = [];
 
@@ -111,7 +112,8 @@ function processMoves(
                         )
                     );
                 }
-                console.log(obstacleOnPathXthenY, obstacleOnPathYthenX);
+                if (DEBUG)
+                    console.log(obstacleOnPathXthenY, obstacleOnPathYthenX);
 
                 // This if statement is made to check if there are obstacles on both paths.
                 // That means our piece cannot dodge them unless it can jump over (move.canJumpOver property).

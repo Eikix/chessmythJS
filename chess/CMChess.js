@@ -1,9 +1,17 @@
 const Board = require('./boards/CMBoard');
+const allPossibleMovesOnBoard = require('./utils/moves/allPossibleMovesOnBoard');
 
 class Chess extends Board {
     #turn = 0;
     constructor(boardOptions, piecesAndMoves) {
         super(boardOptions, piecesAndMoves);
+        this.allPossibleMovesPerTurn = allPossibleMovesOnBoard(
+            this.getDimension(),
+            this.getPiecesAndMoves(),
+            'w',
+            this.getBoard(),
+            false
+        );
     }
 
     getTurn() {
@@ -14,15 +22,16 @@ class Chess extends Board {
         return this.#turn % 2 === 0;
     }
 
-    moveTo(from, to, playerColor) {
-        const isPlayerTurn =
-            playerColor === 'w' ? this.isWhiteTurn() : !this.isWhiteTurn();
-        if (!isPlayerTurn) return null;
-        if (isPlayerTurn) {
+    moveFromTo(from, to) {
+        const playerColor = this.isWhiteTurn() ? 'w' : 'b';
+        if (this.board[from]?.piece?.color === playerColor) {
             const completeMove = this.move(from, to, playerColor);
             if (completeMove) {
                 this.#turn += 1;
+                return true;
             }
+        } else {
+            return false;
         }
     }
 }

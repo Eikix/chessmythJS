@@ -1,9 +1,6 @@
-const processMoves = require('./chess/utils/processMoves');
-const allowedMoves = require('./chess/utils/pieceTypeToMoves');
-const allPossibleMovesOnBoard = require('./chess/utils/allPossibleMovesOnBoard.js');
+const allowedMoves = require('./chess/utils/pieces/pieceTypeToMoves');
 
 const width = 10;
-
 const boardOptions = {
     backline: 'rnnbqkbnnr',
     frontline: 'pppppppppp',
@@ -15,10 +12,8 @@ const boardOptions = {
 };
 
 const Chess = require('./chess/CMChess');
-
 const chess = new Chess(boardOptions, allowedMoves);
 const board = chess.getBoard();
-const dimension = chess.getDimensions();
 
 // chess.move('3;5', '3;5', 'w');
 //console.log(chess.getBoard());
@@ -42,9 +37,8 @@ const dimension = chess.getDimensions();
 // console.log(allowedMoves.n);
 // console.log(processMoves(width, '6;3', allowedMoves.n, 'w', board));
 // console.log(chess.getTurn());
-console.log(board);
 
-chess.moveTo('1;2', '1;4', 'w');
-chess.moveTo('1;9', '1;8', 'b');
-
-console.log(chess.getBoard());
+// console.log(chess.moveFromTo('1;9', '1;8'));
+// console.log(chess.moveFromTo('1;2', '1;4'));
+console.log(chess.allPossibleMovesPerTurn);
+// console.log(chess.getBoard());
