@@ -7,10 +7,12 @@ function exitCheckMoveList(
     playerColor,
     board
 ) {
-    const initTmp = board['6;10'].piece;
-    board['6;10'].piece = null;
-    board['3;3'].piece = initTmp;
-    console.log(board);
+    // Artificially places black king on 3;3 to see behavior.
+    // const initTmp = board['6;10'].piece;
+    // board['6;10'].piece = null;
+    // board['3;3'].piece = initTmp;
+    // console.log(board);
+
     const exitCheckMovesArray = [];
     console.log("Careful, you're in check!");
     const allMoves = allPossibleMovesOnBoard(

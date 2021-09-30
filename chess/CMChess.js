@@ -1,4 +1,5 @@
 const Board = require('./boards/CMBoard');
+const exitCheckMoveList = require('./utils/helpers/exitCheckMoveList');
 const isCheck = require('./utils/helpers/isCheck');
 const allPossibleMovesOnBoard = require('./utils/moves/allPossibleMovesOnBoard');
 
@@ -37,14 +38,32 @@ class Chess extends Board {
 
                 // Setting all possible moves on board for next turn.
                 const nextPlayerColor = playerColor === 'w' ? 'b' : 'w';
-                this.allPossibleMovesPerTurn = allPossibleMovesOnBoard(
+                const nextPlayerKing =
+                    nextPlayerColor === 'w' ? this.wKing : this.bKing;
+                const hypothethicMoves = allPossibleMovesOnBoard(
                     this.getDimension(),
                     this.getPiecesAndMoves(),
-                    nextPlayerColor,
+                    playerColor,
                     this.getBoard(),
                     false
                 );
-
+                if (isCheck(hypothethicMoves, nextPlayerKing)) {
+                    this.allPossibleMovesPerTurn = exitCheckMoveList(
+                        nextPlayerKing,
+                        this.getDimension(),
+                        this.getPiecesAndMoves(),
+                        nextPlayerColor,
+                        this.getBoard()
+                    );
+                } else {
+                    this.allPossibleMovesPerTurn = allPossibleMovesOnBoard(
+                        this.getDimension(),
+                        this.getPiecesAndMoves(),
+                        nextPlayerColor,
+                        this.getBoard(),
+                        false
+                    );
+                }
                 return true;
             } else {
                 return false;
