@@ -23,7 +23,7 @@ function allPossibleMovesOnBoard(
                     playerColor,
                     board
                 );
-                if (verbose) {
+                if (moves.length > 0 && verbose) {
                     allPossibleMoves[coord] = {
                         moves: moves,
                         piece: board[coord].piece.type,

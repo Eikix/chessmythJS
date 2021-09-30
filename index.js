@@ -2,7 +2,7 @@ const allowedMoves = require('./chess/utils/pieces/pieceTypeToMoves');
 
 const width = 10;
 const boardOptions = {
-    backline: 'rnnbqkbnnr',
+    backline: 'rnbbqkbnnr',
     frontline: 'pppppppppp',
     width: width,
     terrain: ['4;6'],
@@ -12,6 +12,8 @@ const boardOptions = {
 };
 
 const Chess = require('./chess/CMChess');
+const exitCheckMoveList = require('./chess/utils/helpers/exitCheckMoveList');
+const pieceTypeToMoves = require('./chess/utils/pieces/pieceTypeToMoves');
 const chess = new Chess(boardOptions, allowedMoves);
 const board = chess.getBoard();
 
@@ -40,5 +42,8 @@ const board = chess.getBoard();
 
 // console.log(chess.moveFromTo('1;9', '1;8'));
 // console.log(chess.moveFromTo('1;2', '1;4'));
-console.log(chess.allPossibleMovesPerTurn);
+//console.log(chess.allPossibleMovesPerTurn);
 // console.log(chess.getBoard());
+
+// console.log(board);
+console.log(exitCheckMoveList('3;3', 10, pieceTypeToMoves, 'b', board));

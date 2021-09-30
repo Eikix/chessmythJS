@@ -30,10 +30,7 @@ class Chess extends Board {
 
             const playerKing = playerColor === 'w' ? this.wKing : this.bKing;
             const isChecked = isCheck(this.allPossibleMovesPerTurn, playerKing);
-            if (isChecked) {
-                console.log("Careful, you're in check!");
-                return "You're in check!";
-            }
+
             const completeMove = this.move(from, to, playerColor);
             if (completeMove) {
                 this.#turn += 1;
@@ -49,9 +46,9 @@ class Chess extends Board {
                 );
 
                 return true;
+            } else {
+                return false;
             }
-        } else {
-            return false;
         }
     }
 }
