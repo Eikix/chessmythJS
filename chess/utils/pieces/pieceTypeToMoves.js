@@ -309,7 +309,7 @@ module.exports = {
         },
     ],
     // Matriarche Succube - Démons
-    s: [
+    m: [
         {
             move: [0, -1],
             available: -1,
@@ -626,6 +626,65 @@ module.exports = {
             isSpecialMove: false,
             canCapture: true,
             mustCapture: false,
+            canJumpOver: false,
+        },
+    ],
+    // Super pions
+    s: [
+        {
+            move: [0, 3],
+            available: 1,
+            isSpecialMove: true,
+            canCapture: false,
+            mustCapture: false,
+            canJumpOver: false,
+        },
+        {
+            move: [0, 2],
+            available: -1,
+            isSpecialMove: false,
+            canCapture: false,
+            mustCapture: false,
+            canJumpOver: false,
+        },
+        {
+            move: [0, 1],
+            available: -1,
+            isSpecialMove: false,
+            canCapture: false,
+            mustCapture: false,
+            canJumpOver: false,
+        },
+        {
+            move: [1, 1],
+            available: -1,
+            isSpecialMove: false,
+            canCapture: true,
+            mustCapture: true,
+            canJumpOver: false,
+        },
+        {
+            move: [2, 2],
+            available: -1,
+            isSpecialMove: false,
+            canCapture: true,
+            mustCapture: true,
+            canJumpOver: false,
+        },
+        {
+            move: [-1, 1],
+            available: -1,
+            isSpecialMove: false,
+            canCapture: true,
+            mustCapture: true,
+            canJumpOver: false,
+        },
+        {
+            move: [-2, 2],
+            available: -1,
+            isSpecialMove: false,
+            canCapture: true,
+            mustCapture: true,
             canJumpOver: false,
         },
     ],
