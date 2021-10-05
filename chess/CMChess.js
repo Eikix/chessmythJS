@@ -2,6 +2,8 @@ const Board = require('./boards/CMBoard');
 const exitCheckMoveList = require('./utils/helpers/exitCheckMoveList');
 const isCheck = require('./utils/helpers/isCheck');
 const allPossibleMovesOnBoard = require('./utils/moves/allPossibleMovesOnBoard');
+const _ = require('lodash');
+const DEBUG = false;
 
 class Chess extends Board {
     #turn = 0;
@@ -28,7 +30,9 @@ class Chess extends Board {
     getLegalMoves(coord) {
         const legalMoves = [];
         const playerColor = this.isWhiteTurn() ? 'w' : 'b';
+        if (DEBUG) console.log('Player Color: ', playerColor);
         const playerKing = playerColor === 'w' ? this.wKing : this.bKing;
+        if (DEBUG) console.log('Player King : ', playerKing);
         const allowedMoves = exitCheckMoveList(
             playerKing,
             this.getDimension(),
@@ -36,11 +40,27 @@ class Chess extends Board {
             playerColor,
             this.getBoard()
         );
+        if (DEBUG)
+            console.log('exitCheckMoveList returned value: ', allowedMoves);
         const moves = this.getPossibleMoves(coord, playerColor);
+        if (DEBUG)
+            console.log(
+                'Allowed Moves without taking in account Check: ',
+                moves
+            );
         moves.forEach(move => {
             const movement = { from: coord, to: move.move };
-            if (allowedMoves.includes(movement)) legalMoves.push(movement);
+            if (DEBUG) console.log('Desired movement : ', movement);
+            if (DEBUG) console.log(movement);
+            allowedMoves.forEach(legalMove => {
+                if (_.isEqual(legalMove, movement)) legalMoves.push(movement);
+            });
         });
+        if (DEBUG)
+            console.log(
+                'Legal Moves to be returned from getLegalMoves : ',
+                legalMoves
+            );
         return legalMoves;
     }
 
@@ -51,8 +71,10 @@ class Chess extends Board {
             let completeMove = null;
             const legalMoves = this.getLegalMoves(from);
             const desiredMove = { from, to };
-            if (legalMoves.includes(desiredMove))
-                completeMove = this.move(from, to, playerColor);
+            legalMoves.forEach(legalMove => {
+                if (_.isEqual(legalMove, desiredMove))
+                    completeMove = this.move(from, to, playerColor);
+            });
             if (completeMove) {
                 this.#turn += 1;
 
