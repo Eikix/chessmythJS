@@ -14,6 +14,7 @@ class Chess extends Board {
             this.getBoard(),
             false
         );
+        this.isGameOver = false;
     }
 
     getTurn() {
@@ -24,15 +25,34 @@ class Chess extends Board {
         return this.#turn % 2 === 0;
     }
 
+    getLegalMoves(coord) {
+        const legalMoves = [];
+        const playerColor = this.isWhiteTurn() ? 'w' : 'b';
+        const playerKing = playerColor === 'w' ? this.wKing : this.bKing;
+        const allowedMoves = exitCheckMoveList(
+            playerKing,
+            this.getDimension(),
+            this.getPiecesAndMoves(),
+            playerColor,
+            this.getBoard()
+        );
+        const moves = this.getPossibleMoves(coord, playerColor);
+        moves.forEach(move => {
+            const movement = { from: coord, to: move.move };
+            if (allowedMoves.includes(movement)) legalMoves.push(movement);
+        });
+        return legalMoves;
+    }
+
     moveFromTo(from, to) {
         const playerColor = this.isWhiteTurn() ? 'w' : 'b';
         if (this.board[from]?.piece?.color === playerColor) {
-            // Verify isCheck state of player king.
-
             const playerKing = playerColor === 'w' ? this.wKing : this.bKing;
-            const isChecked = isCheck(this.allPossibleMovesPerTurn, playerKing);
-
-            const completeMove = this.move(from, to, playerColor);
+            let completeMove = null;
+            const legalMoves = this.getLegalMoves(from);
+            const desiredMove = { from, to };
+            if (legalMoves.includes(desiredMove))
+                completeMove = this.move(from, to, playerColor);
             if (completeMove) {
                 this.#turn += 1;
 
@@ -55,6 +75,9 @@ class Chess extends Board {
                         nextPlayerColor,
                         this.getBoard()
                     );
+                    if (this.allPossibleMovesPerTurn.length === 0) {
+                        this.isGameOver = true;
+                    }
                 } else {
                     this.allPossibleMovesPerTurn = allPossibleMovesOnBoard(
                         this.getDimension(),
