@@ -79,51 +79,88 @@ function processMoves(
             } else {
                 // This is made to spot obstacles on the way. Since any [X, Y] movement has two possible ways of occurring (it has more but we don't account for them)
                 // Path X then Y means the piece moves along the X axis then the Y axis and vice versa for Path Y then X.
-                const [pathXthenY, pathYthenX] = generatePaths(
-                    xCoordAsNumber,
-                    yCoordAsNumber,
-                    xMove,
-                    yMove,
-                    playerColor
-                );
-
-                if (DEBUG) console.log(pathXthenY, pathYthenX);
-                const obstacleOnPathXthenY = [];
-                const obstacleOnPathYthenX = [];
-
-                for (let coordXthenY of pathXthenY) {
-                    obstacleOnPathXthenY.push(
-                        checkTargetCoordIsObstacle(
-                            coordXthenY,
-                            board,
-                            move,
-                            playerColor
-                        )
+                if (Math.abs(xMove) != Math.abs(yMove)) {
+                    const [pathXthenY, pathYthenX] = generatePaths(
+                        xCoordAsNumber,
+                        yCoordAsNumber,
+                        xMove,
+                        yMove,
+                        playerColor
                     );
-                }
 
-                for (let coordYthenX of pathYthenX) {
-                    obstacleOnPathYthenX.push(
-                        checkTargetCoordIsObstacle(
-                            coordYthenX,
-                            board,
-                            move,
-                            playerColor
-                        )
+                    if (DEBUG) console.log(pathXthenY, pathYthenX);
+                    const obstacleOnPathXthenY = [];
+                    const obstacleOnPathYthenX = [];
+
+                    for (let coordXthenY of pathXthenY) {
+                        obstacleOnPathXthenY.push(
+                            checkTargetCoordIsObstacle(
+                                coordXthenY,
+                                board,
+                                move,
+                                playerColor
+                            )
+                        );
+                    }
+
+                    for (let coordYthenX of pathYthenX) {
+                        obstacleOnPathYthenX.push(
+                            checkTargetCoordIsObstacle(
+                                coordYthenX,
+                                board,
+                                move,
+                                playerColor
+                            )
+                        );
+                    }
+                    if (DEBUG)
+                        console.log(obstacleOnPathXthenY, obstacleOnPathYthenX);
+
+                    // This if statement is made to check if there are obstacles on both paths.
+                    // That means our piece cannot dodge them unless it can jump over (move.canJumpOver property).
+
+                    if (
+                        obstacleOnPathYthenX.includes(true) &&
+                        obstacleOnPathXthenY.includes(true) &&
+                        !move.canJumpOver
+                    ) {
+                        return;
+                    }
+                }
+                if (Math.abs(xMove) === Math.abs(yMove)) {
+                    const diagPath = generatePaths(
+                        xCoordAsNumber,
+                        yCoordAsNumber,
+                        xMove,
+                        yMove,
+                        playerColor
                     );
-                }
-                if (DEBUG)
-                    console.log(obstacleOnPathXthenY, obstacleOnPathYthenX);
 
-                // This if statement is made to check if there are obstacles on both paths.
-                // That means our piece cannot dodge them unless it can jump over (move.canJumpOver property).
+                    if (DEBUG) console.log(pathXthenY, pathYthenX);
+                    const obstacleOnPathDiag = [];
 
-                if (
-                    obstacleOnPathYthenX.includes(true) &&
-                    obstacleOnPathXthenY.includes(true) &&
-                    !move.canJumpOver
-                ) {
-                    return;
+                    for (let tile of diagPath) {
+                        obstacleOnPathDiag.push(
+                            checkTargetCoordIsObstacle(
+                                tile,
+                                board,
+                                move,
+                                playerColor
+                            )
+                        );
+                    }
+                    if (DEBUG)
+                        console.log(obstacleOnPathXthenY, obstacleOnPathYthenX);
+
+                    // This if statement is made to check if there are obstacles on both paths.
+                    // That means our piece cannot dodge them unless it can jump over (move.canJumpOver property).
+
+                    if (
+                        obstacleOnPathDiag.includes(true) &&
+                        !move.canJumpOver
+                    ) {
+                        return;
+                    }
                 }
 
                 const capturableEnnemyOnTargetCoord =
@@ -368,11 +405,7 @@ function processMoves(
                     }
                     break;
                 case 'diagForwardRight':
-                    for (
-                        let i = 1;
-                        i <= dimension && i >= 1;
-                        i = i + playerDirection
-                    ) {
+                    for (let i = 1; i <= dimension && i >= 1; i++) {
                         if (
                             ((playerDirection === 1 &&
                                 yCoordAsNumber + i <= dimension) ||
@@ -426,11 +459,7 @@ function processMoves(
                     }
                     break;
                 case 'diagBackwardRight':
-                    for (
-                        let i = 1;
-                        i <= dimension && i >= 1;
-                        i = i - playerDirection
-                    ) {
+                    for (let i = 1; i <= dimension && i >= 1; i++) {
                         if (
                             ((playerDirection === 1 &&
                                 yCoordAsNumber - i >= 1) ||
@@ -484,11 +513,7 @@ function processMoves(
                     }
                     break;
                 case 'diagForwardLeft':
-                    for (
-                        let i = 1;
-                        i <= dimension && i >= 1;
-                        i = i + playerDirection
-                    ) {
+                    for (let i = 1; i <= dimension && i >= 1; i++) {
                         if (
                             ((playerDirection === 1 &&
                                 yCoordAsNumber + i <= dimension) ||
@@ -542,11 +567,7 @@ function processMoves(
                     }
                     break;
                 case 'diagBackwardLeft':
-                    for (
-                        let i = 1;
-                        i <= dimension && i >= 1;
-                        i = i + playerDirection
-                    ) {
+                    for (let i = 1; i <= dimension && i >= 1; i++) {
                         if (
                             ((playerDirection === 1 &&
                                 yCoordAsNumber - i >= 1) ||
