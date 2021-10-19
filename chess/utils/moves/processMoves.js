@@ -177,7 +177,8 @@ function processMoves(
                     targetCoord,
                     board,
                     move,
-                    playerColor
+                    playerColor,
+                    false
                 );
                 if (!targetCoordIsAnObstacle) {
                     possibleMoves.push({

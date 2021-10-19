@@ -1,4 +1,10 @@
-function checkTargetCoordIsObstacle(targetCoord, board, move, playerColor) {
+function checkTargetCoordIsObstacle(
+    targetCoord,
+    board,
+    move,
+    playerColor,
+    ignoreMustCapture = true
+) {
     const pieceExistsAndIsAllied =
         board[targetCoord].piece !== null &&
         board[targetCoord].piece.color === playerColor;
@@ -9,8 +15,10 @@ function checkTargetCoordIsObstacle(targetCoord, board, move, playerColor) {
 
     const terrainExistsAtLocation = board[targetCoord].terrain;
 
-    const pieceIsNullButMustCapture =
-        board[targetCoord].piece === null && move.mustCapture;
+    let pieceIsNullButMustCapture = false;
+    if (!ignoreMustCapture)
+        pieceIsNullButMustCapture =
+            board[targetCoord].piece === null && move.mustCapture;
 
     const targetLocationIsAnObstacle =
         pieceExistsAndIsAllied ||

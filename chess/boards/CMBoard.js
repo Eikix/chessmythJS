@@ -1,5 +1,5 @@
 const convertBoardOptionsToInitialBoard = require('../utils/helpers/convertStringToBoard');
-const allPossibleMovesOnBoard = require('../utils/moves/allPossibleMovesOnBoard');
+const pieceTypeToMana = require('../utils/pieces/pieceTypeToMana');
 const processMoves = require('../utils/moves/processMoves');
 
 class Board {
@@ -12,6 +12,15 @@ class Board {
             boardOptions,
             piecesAndMoves
         );
+        this.manaCount = {
+            b: 0,
+            w: 0,
+        };
+        this.casualties = {
+            b: [],
+            w: [],
+        };
+        this.pieceTypeToMana = pieceTypeToMana;
         this.#piecesAndMoves = piecesAndMoves;
         this.wKing = boardOptions?.wKing;
         this.bKing = boardOptions?.bKing;
@@ -53,6 +62,7 @@ class Board {
 
     move(from, to, playerColor) {
         const moves = this.getPossibleMoves(from, playerColor);
+        const otherPlayerColor = playerColor === 'w' ? 'b' : 'w';
         if (this.board[from].piece === null) return false;
         let targetMove = null;
         console.log(moves);
@@ -88,6 +98,15 @@ class Board {
                 this.board[from].piece.specialMoveCharges -= 1;
             }
 
+            // Checks if the piece is a super pawn, and reproduce the pawn super power behavior.
+            if (
+                this.board[from].piece.type === 's' &&
+                !targetMove.isSpecialMove &&
+                this.board[from].piece.specialMoveCharges === 1
+            ) {
+                this.board[from].piece.specialMoveCharges -= 1;
+            }
+
             // Moves the piece
             const tmp = this.board[from].piece;
             if (
@@ -96,6 +115,20 @@ class Board {
             ) {
                 tmp.specialMoveCharges -= 1;
             }
+            // We handle here the logic of capturing pieces & mana.
+            if (this.board[to].piece) {
+                this.casualties[otherPlayerColor].push(
+                    this.board[to].piece.type
+                );
+                this.manaCount[playerColor] +=
+                    this.pieceTypeToMana[this.board[to].piece.type];
+            }
+            // We handle here the logic of gathering mana.
+            if (this.board[to].mana) {
+                this.manaCount[playerColor] += 4;
+                this.board[to].mana = false;
+            }
+
             this.board[from].piece = null;
             this.board[to].piece = tmp;
             return true;
