@@ -1,12 +1,12 @@
 // Will be given board dimension, current piece location, and allowed moves array --> returns possible landing tiles.
 // Note that currentLoc should be expressed as follows: xNumber;yNumber
 
-const checkTargetCoordIsCapturable = require('../helpers/checkTargetCoordIsCapturable');
-const checkTargetCoordIsObstacle = require('../helpers/checkTargetCoordIsObstacle');
-const generatePaths = require('../helpers/generatePaths');
+import checkTargetCoordIsCapturable from '../helpers/checkTargetCoordIsCapturable';
+import checkTargetCoordIsObstacle from '../helpers/checkTargetCoordIsObstacle';
+import generatePaths from '../helpers/generatePaths';
 const DEBUG = false;
 
-function processMoves(
+export default function processMoves(
     dimension,
     currentLocation,
     mobility,
@@ -628,4 +628,3 @@ function processMoves(
     return possibleMoves;
 }
 
-module.exports = processMoves;
